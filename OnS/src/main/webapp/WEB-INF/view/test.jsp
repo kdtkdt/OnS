@@ -10,6 +10,7 @@
 </head>
 <body>
 <h1>OnS</h1>
-${ons }
+${ons }<br>
+${mybatis }<br>
 </body>
 </html>
