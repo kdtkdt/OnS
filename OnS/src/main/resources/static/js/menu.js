@@ -1,33 +1,41 @@
 $(document).ready(function() {
-	
+
 	const homeRoute = '/recruitmentlist';
-	
+
 	// 로고
 	$('#logo').click(function() {
 		location.href = homeRoute;
 	})
 
-	// 로그인/로그아웃
-	if (localStorage.getItem('isLogin')) {
-		$('#username').text(localStorage.getItem('username'));
-		$('#welcome').text('님 환영합니다!');
-		$('#login-logout-button').text('로그아웃');
-	}
-
+	// 로그인/로그아웃 버튼 클릭
 	$('#login-logout-button').click(function() {
-		if (!localStorage.getItem('isLogin')) {
-			location.href = "./Login.html";
+		if ($(this).text() == '로그인') {
+			location.href = "/login";
 		} else {
+			requestGet('/request-logout');
 			alert(`로그아웃 되었습니다.`);
 			$('#username').text('');
 			$('#welcome').text('');
 			$('#login-logout-button').text('로그인');
-			localStorage.removeItem('isLogin');
-			if (location.href.includes('profile.html')) {
+			if (location.href.includes('/profile')) {
 				location.href = homeRoute;
 			}
 		}
 	})
+
+	function requestGet(url) {
+		$.ajax({
+			url: url,
+			type: 'GET',
+			dataType: 'json',
+			success: function(response) {
+				console.log(response);
+			},
+			error: function(xhr, status, error) {
+				console.error(error);
+			}
+		});
+	}
 
 	// 메뉴 스타일
 	$('.menu').css('text-decoration', 'none');
@@ -59,7 +67,7 @@ $(document).ready(function() {
 		board = 3;
 	} else if (location.href.includes('/review')) {
 		board = 4;
-	} else if (location.href.includes('profile.html')) {
+	} else if (location.href.includes('/profile')) {
 		board = 9;
 	}
 
