@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ons.study.service.QnAContentService;
 
 @Controller
-public class BoardController {
+public class QnABoardController {
 	
 	@Autowired
 	QnAContentService service;
