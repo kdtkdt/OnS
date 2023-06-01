@@ -1,7 +1,10 @@
 $(document).ready(function() {
+	
+	const homeRoute = '/recruitmentlist';
+	
 	// 로고
 	$('#logo').click(function() {
-		location.href = "./boardRecruitment.html?board=1";
+		location.href = homeRoute;
 	})
 
 	// 로그인/로그아웃
@@ -21,7 +24,7 @@ $(document).ready(function() {
 			$('#login-logout-button').text('로그인');
 			localStorage.removeItem('isLogin');
 			if (location.href.includes('profile.html')) {
-				location.href = "./boardRecruitment.html?board=1";
+				location.href = homeRoute;
 			}
 		}
 	})
@@ -48,13 +51,13 @@ $(document).ready(function() {
 	const urlParams = new URLSearchParams(window.location.search);
 	let board = urlParams.get('board');
 
-	if (location.href.includes('boardRecruitment.html')) {
+	if (location.href.includes('/recruit')) {
 		board = 1;
 	} else if (location.href.includes('/qna')) {
 		board = 2;
 	} else if (location.href.includes('ProofShot.html')) {
 		board = 3;
-	} else if (location.href.includes('ReviewBoard.html')) {
+	} else if (location.href.includes('/review')) {
 		board = 4;
 	} else if (location.href.includes('profile.html')) {
 		board = 9;

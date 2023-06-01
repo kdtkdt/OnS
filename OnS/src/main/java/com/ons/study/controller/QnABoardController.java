@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ons.study.service.QnAContentService;
 
 @Controller
-public class BoardController {
+public class QnABoardController {
 	
 	@Autowired
 	QnAContentService service;
@@ -22,5 +22,24 @@ public class BoardController {
 		model.addAttribute("qnaContentsTotalCount", service.getQnaContentTotalCount());
 		model.addAttribute("pageLimit", QnAContentService.PAGE_LIMIT);
 		return "QnABoard";
+	}
+	
+	@GetMapping("/qnawrite")
+	public String qnaWrite() {
+		return "QnABoardWrite";
+	}
+	
+	@GetMapping("/qnapostview")
+	public String qnaPostView(Model model, @RequestParam(value="id", required=true) String id) {
+		if (id == null || id.isEmpty()) {
+			// 요청 파라미터가 입력되지 않았을 경우 질문 게시판으로 이동.
+            return "redirect:/qnaboard";   
+        }
+		long idLong = Long.parseLong(id);
+		model.addAttribute("qnaContent", service.getQnaContentById(idLong));
+		model.addAttribute("tags", service.getTagsByContentId(idLong));
+		model.addAttribute("comments", service.getCommentsById(idLong));
+		// 요청 파라미터가 입력되었을 경우.
+        return "QnAPostView";
 	}
 }
