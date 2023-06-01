@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ons.study.dao.QnAContentDAO">
+
+<!-- qnacontentdto 매핑을 위한 resultMap 정의 -->
+<resultMap id="QnaContentDtoResultMap" type="qnacontentdto">
+    <id property="id" column="id" />
+    <result property="userId" column="user_id" />
+    <result property="title" column="title" />
+    <result property="contents" column="contents" />
+    <result property="createdTime" column="created_time" javaType="java.time.LocalDateTime" />
+    <result property="updatedTime" column="updated_time" javaType="java.time.LocalDateTime" />
+    <result property="solved" column="solved" />
+    <result property="viewCount" column="view_count" />
+    <result property="commentCount" column="comment_count" />
+    <result property="paths" column="path" javaType="java.lang.String" jdbcType="ARRAY" />
+    <result property="nickname" column="nickname" />
+</resultMap>
+
+<!-- 질문 게시판의 게시물을 페이지별로 조회하는 쿼리 -->
+<select id="getQnaContentByPage" resultMap="QnaContentDtoResultMap">
+    SELECT *, (SELECT COUNT(*) FROM comment WHERE content_id = c.id) AS comment_count
+    FROM content AS c
+    LEFT JOIN user AS u ON c.user_id = u.id
+    WHERE board_type = 2
+    ORDER BY created_time DESC
+    LIMIT #{startRow}, #{pageSize}
+</select>
+
+<select id="getQnaContentTotalCount" resultType="long">
+	SELECT COUNT(*) FROM content WHERE board_type = 2;
+</select>
+
+<select id="getTagsByContentId" resultType="String">
+    SELECT name
+    FROM tag
+    WHERE content_id = #{contentId}
+</select>
+
+
+</mapper>
