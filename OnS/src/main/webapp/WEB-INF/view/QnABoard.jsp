@@ -45,11 +45,11 @@
 					</div>
 				</div>
 			</div>
-			<div class="container">
+			<div id="articles-container" class="container">
 				<!-- 질문 컴포넌트 -->
 				<c:forEach items="${qnaLists }" var="dto">
-					<input type="hidden" id="qna-id" value="${dto.getId()}" />
 					<article class="blog-list">
+						<input type="hidden" class="qna-id" value="${dto.getId()}" />
 						<div class="blog-item">
 							<div class="badge fon-11 mb10">${dto.solved ? "해결" : "미해결" }</div>
 							<div class="blog-content">
