@@ -2,12 +2,13 @@ $(document).ready(function(){
 
     // 질문 올리기 버튼 선택한 경우
     $('#question-btn').click(function(){
-        window.location.href = './QnABoardWrite.html?board=2';
+        window.location.href = '/qnawrite';
     });
 
     // 게시물을 선택한 경우
     $('.blog-list').click(function(){
-        window.location.href = './QnAPostView.html?board=2';
+		let id = document.getElementById('qna-id').value;
+        window.location.href = `/qnapostview?id=${id}`;
     });
 
     $('#search-btn').click(function(){
