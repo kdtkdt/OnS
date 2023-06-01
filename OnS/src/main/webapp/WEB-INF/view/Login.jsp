@@ -48,9 +48,32 @@
 			pw.className+=" changeplaceholder"; 
 			return false; 
 		} else {
-			localStorage.setItem('isLogin', true); // 시연용
-			location.href = '/recruitmentlist';
+			let data = {
+				'email': id.value,
+				'password': pw.value,
+			}
+			loginRequest('/request-login', data);
 		}
 	};
+	
+	function loginRequest(url, data) {
+		$.ajax({
+			url: url,
+			type: 'POST',
+			dataType: 'json',
+			data: JSON.stringify(data),
+			contentType: 'application/json',
+			success: function(response) {
+				console.log(response);
+				alert("로그인 성공");
+				localStorage.setItem('isLogin', true);
+				location.href = '/recruitmentlist';
+			},
+			error: function(xhr, status, error) {
+				// 요청 실패 시 실행할 코드
+				alert("로그인 실패");
+			}
+		});
+	}
 </script>
 </html>

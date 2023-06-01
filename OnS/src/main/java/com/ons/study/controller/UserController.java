@@ -15,4 +15,5 @@ public class UserController {
 	public String signup() {
 		return "SignUp";
 	}
+	
 }
