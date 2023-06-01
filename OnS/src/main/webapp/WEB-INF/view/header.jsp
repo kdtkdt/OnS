@@ -4,7 +4,7 @@
     <div id="logo-box">
         <img id="logo" alt="logo" src="/img/Logo.png" width="200" class="mb20">
         <div>
-            <a id="username" class="fon-15 mt20 mr10 fon-bold" href="./profile.html"></a>
+            <a id="username" class="fon-15 mt20 mr10 fon-bold" href="/profile"></a>
             <p id="welcome" class="fon-15 mt20 mr20"></p>
             <button id="login-logout-button" class="fon-15 mt20">로그인</button>
         </div>

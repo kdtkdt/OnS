@@ -65,8 +65,9 @@
 			contentType: 'application/json',
 			success: function(response) {
 				console.log(response);
-				alert("로그인 성공");
 				localStorage.setItem('isLogin', true);
+				localStorage.setItem('nickname', response.nickname);
+				localStorage.setItem('userId', response.userId);
 				location.href = '/recruitmentlist';
 			},
 			error: function(xhr, status, error) {

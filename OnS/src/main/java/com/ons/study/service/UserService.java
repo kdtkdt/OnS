@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ons.study.dao.UserDAO;
+import com.ons.study.dto.UserDTO;
 
 @Service
 public class UserService {
@@ -13,6 +14,10 @@ public class UserService {
 	
 	public int isMember(String email, String password) {
 		return userDao.isMember(email, password);
+	}
+	
+	public UserDTO getUserByEmailAndPassword(String email, String password) {
+		return userDao.getUserByEmailAndPassword(email, password);
 	}
 
 }

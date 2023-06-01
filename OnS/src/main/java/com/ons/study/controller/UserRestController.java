@@ -17,9 +17,10 @@ public class UserRestController {
 	
 	@PostMapping("/request-login")
 	public ResponseEntity<UserDTO> requestLogin(@RequestBody UserDTO user) {
-		if (userService.isMember(user.getEmail(), user.getPassword()) == 1) {
-			user.setEmail("");
-			user.setPassword("");
+	String email = user.getEmail();
+	String password = user.getPassword();
+		if (userService.isMember(email, password) == 1) {
+			user = userService.getUserByEmailAndPassword(email, password);
 			return ResponseEntity.ok().body(user);
 		} else {
 			return ResponseEntity.notFound().build();

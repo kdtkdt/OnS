@@ -16,4 +16,9 @@ public class UserController {
 		return "SignUp";
 	}
 	
+	@GetMapping("profile")
+	public String profile() {
+		return "Profile";
+	}
+	
 }
