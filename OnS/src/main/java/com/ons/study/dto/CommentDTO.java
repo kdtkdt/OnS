@@ -14,7 +14,14 @@ public class CommentDTO {
 	private String contents;
 	private LocalDateTime createdTime;
 	private LocalDateTime updatedTime;
+	UserDTO user;
 	
+	public UserDTO getUser() {
+		return user;
+	}
+	public void setUser(UserDTO user) {
+		this.user = user;
+	}
 	public long getId() {
 		return id;
 	}
