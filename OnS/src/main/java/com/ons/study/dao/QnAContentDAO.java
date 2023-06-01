@@ -15,4 +15,6 @@ public interface QnAContentDAO {
 	public List<QnAContentDTO> getQnaContentByPage(int startRow, int pageSize);
 	public String[] getTagsByContentId(long contentId);
 	public long getQnaContentTotalCount();
+	public QnAContentDTO getQnaContentById(long contentId);
+	
 }

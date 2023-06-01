@@ -35,7 +35,10 @@ public class QnABoardController {
 			// 요청 파라미터가 입력되지 않았을 경우 질문 게시판으로 이동.
             return "redirect:/qnaboard";   
         }
-		
+		long idLong = Long.parseLong(id);
+		model.addAttribute("qnaContent", service.getQnaContentById(idLong));
+		model.addAttribute("tags", service.getTagsByContentId(idLong));
+		model.addAttribute("comments", service.getCommentsById(idLong));
 		// 요청 파라미터가 입력되었을 경우.
         return "QnAPostView";
 	}
