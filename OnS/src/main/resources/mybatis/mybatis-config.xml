@@ -6,6 +6,7 @@
 <typeAliases>
 	<typeAlias type="com.ons.study.dto.MemberDTO" alias="memberdto"/>
 	<typeAlias type="com.ons.study.dto.QnAContentDTO" alias="qnacontentdto"/>
+	<typeAlias type="com.ons.study.dto.BoardDTO" alias="boarddto"/>
 </typeAliases>
 
 </configuration>
