@@ -16,7 +16,7 @@ $(document).ready(function() {
 
 	$('#login-logout-button').click(function() {
 		if (!localStorage.getItem('isLogin')) {
-			location.href = "./Login.html";
+			location.href = "/login";
 		} else {
 			alert(`로그아웃 되었습니다.`);
 			$('#username').text('');
