@@ -3,6 +3,7 @@ package com.ons.study.dto;
 import org.springframework.stereotype.Component;
 
 
+
 @Component
 public class RecruitmentDTO {
 	int id, content_id, user_id, parent_id;

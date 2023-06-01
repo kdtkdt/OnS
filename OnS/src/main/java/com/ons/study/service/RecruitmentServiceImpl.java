@@ -13,6 +13,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 	@Autowired
 	RecruitmentDAO dao;
 
+	
 	@Override
 	public List<RecruitmentDTO> recruitmentList() {
 		// TODO Auto-generated method stub

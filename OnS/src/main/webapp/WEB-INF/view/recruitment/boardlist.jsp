@@ -12,6 +12,7 @@
 <script src="/js/menu.js"></script>
 </head>
 <body>
+
     <div id="header"></div>
     <br/>
     <section class="blog-section">
