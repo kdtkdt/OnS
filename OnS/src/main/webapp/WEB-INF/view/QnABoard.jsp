@@ -51,7 +51,12 @@
 					<article class="blog-list">
 						<input type="hidden" class="qna-id" value="${dto.getId()}" />
 						<div class="blog-item">
-							<div class="badge fon-11 mb10">${dto.solved ? "해결" : "미해결" }</div>
+							<c:if test="${dto.solved}">
+								<div class="badge fon-11 mb10" style="background: black; color: white;">해결</div>
+							</c:if>
+							<c:if test="${!dto.solved}">
+								<div class="badge fon-11 mb10">미해결</div>
+							</c:if>
 							<div class="blog-content">
 								<h2 class="mb10 qna-title">${dto.title }</h2>
 								<!-- 질문 작성 시간 -->
@@ -72,7 +77,7 @@
 									for (String item : tags) {
 										if (index > 1)
 											break;
-										out.println("<span class=\"tag fon-11\">#" + item + "</span>");
+										out.println("<span class='tag fon-11'>#" + item + "</span>");
 										++index;
 									}
 									%>
