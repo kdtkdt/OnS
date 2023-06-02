@@ -3,38 +3,21 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
-<script src="/js/jquery-3.6.4.min.js" ></script>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"
+	integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+	crossorigin="anonymous"></script>
+
 <link href="/css/import.css" rel="stylesheet" type="text/css" />
 
-<script>
-$(document).ready(function () {
-	
-    // 작성 버튼 위에 마우스 올렸을 때 검은색으로 변하게 하기
-    $('#writebtn').hover(
-        function () {
-            $(this).css('backgroundColor', 'black');
-        });
-
-//게시글 버튼 클릭시 1개 게시글 메인조회페이지로 이동
-  $('.blog-item').click(
-        function () {
-           window.location.href = "./ReviewPostView.html?board=4";
-        } );
-        
-   //게시글 작성 버튼 클릭시 작성페이지로 이동
-  $('#writebtn').on('click', function () {
-	  	const url = "http://localhost:8080/reviewboardwrite";
-        window.location.href= url;
-        } );
-        
- 
-    });
-
-</script>
-
+    <script src="./js/reviewpostview.js"></script>
+    <script src="./js/menu.js"></script>
+    <script src="./js/reviewboardwrite.js"></script>
+    <script src="./js/reviewboardlist.js"></script>
     <title>OnS | 온라인 스터디</title>
 
 </head>
@@ -44,39 +27,42 @@ $(document).ready(function () {
     <br/>
   	
     <section class="blog-section">
-      <div class="selectBox mb20">
-        <div class="btn-box">
-          <select id="categorybox" class="select">
-            <option disabled selected>-- 선택하세요 --</option>
-            <option value="java">자바</option>
-            <option value="sql">SQL</option>
-            <option value="css">CSS</option>
-            <option value="html">HTML</option>
-            <option value="javascript">자바스크립트</option>
-            <option value="react">리액트</option>			  
-          </select>
-          <button id="searchbtn" class="button ml10 pt5 pb5 pl20 pr20 fon-13 mr10">검색</button>
+      
+      <div class="selectBox mb20"> 
+      
+      <form action="searchboard">
+      	<select name="item">
+      	<option>제목</option>
+      	<option>내용</option>
+      	<option>인강사이트명</option>
+      	</select>
+      	<input type="text" name="searchword">
+          <input type="submit" id="searchbtn" class="button ml10 pt5 pb5 pl20 pr20 fon-13 mr10" value="검색">
+      </form>
           <button id="writebtn" class="button ml10 pt5 pb5 pl20 pr20 fon-13 mr10">글 작성하기</button>
 		</div>
-	  </div>
+    
       <div class="container">
 
-			<c:forEach items="${totalList}" var="boardDTO">
+			<c:forEach items="${totalPagingList}" var="boardDTO">
+        <a href="reviewpostview?id=${boardDTO.id }">
         <div class="blog-list">
-          <div class="blog-item">
-          	<div id="category" class="badge badge-sy fon-11 mb15">
-          	java <!-- 게시글 종류 수정 필요 -->
-          	</div>
+		<div class="blog-item">
+          	<div id="category" class="badge badgesy fon-11 mb15">${boardDTO.lecture_sitename } </div>
             <div class="blog-thumbnail mb10">
               <img src="./img/javascript-review.png" alt="게시물 이미지" class="mb5">
             </div>
             <div class="blog-content">
               <h4 id="title" class="mb5">${boardDTO.title }</h4>
-              <p class="blog-date mb5 fon11">강의만족도: ${boardDTO.rating }</p>
+              <p class="blog-date mb5 fon11">강의만족도: ${boardDTO.lecture_rating }</p>
+              <p class="blog-date mb5 fon11">작성자: <!-- join sql 추가 필요 --></p>
+              <p class="blog-date mb5 fon11">작성시간: ${boardDTO.created_time }</p>
               <p id="text" class="blog-excerpt mb5">${boardDTO.contents }</p> 
+        
             </div>
            </div>
             </div>
+           </a>
 			</c:forEach>
 	            </div>
 	
@@ -86,24 +72,23 @@ $(document).ready(function () {
             <div id="badge-recommend" class="badge-recommend fon-11 mb15">추천수👍</div>
             <div id="badge-new" class="badge-new fon-11 mb15">NEW💬</div>
           
-          
-          
-        <div class="blog-list">
-          <div class="blog-item">
-          	<div id="category" class="badge badge-sy fon-11 mb15">java</div>
-
-            <div class="blog-thumbnail mb10">
-              <img src="./img/javascript-review.png" alt="게시물 이미지" class="mb5">
-            </div>
-            <div class="blog-content">
-              <h4 id="title" class="mb5">자바 알고리즘 문제 풀이 입문</h4>
-              <p id="time" class="blog-date mb5 fon11">강의만족도: ⭐⭐⭐</p>
-              <p id="text" class="blog-excerpt mb5">자바로 코딩테스트를 준비하시는 분을 위한 강좌입니다. 코딩테스트에서 가장 많이 출제되는 Top 10 Topic을 다루고 있습니다. 주제와 연동하여<a href="./ReviewPostView.html?board=4" class="read-more">...</a></p>
-            </div>
           </div>
          </div>
        </div>-->
-   </section>
+       
+   <%
+   int totalBoardCnt = (Integer)request.getAttribute("totalBoardCnt");
+   int totalPage = 0;
+   if(totalBoardCnt%12==0){
+	   totalPage = totalBoardCnt/12;
+   }else {
+	   totalPage = (totalBoardCnt/12) +1;
+   }
+   for(int i=1; i<=totalPage; i++){  %>
+	   <a href="reviewboard?page=<%=i %>"><%=i %>페이지</a>
+  <% }
+   %>
   
+   </section>
   </body>
   </html>

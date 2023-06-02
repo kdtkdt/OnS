@@ -6,15 +6,21 @@ import org.springframework.stereotype.Component;
 public class BoardDTO {
 	int id, user_id;
 	String title, contents;
-	String created_time, updated_time, rating;
+	String created_time, updated_time, lecture_rating, lecture_sitename;
 	int board_type, like, view_count;
 	
-	
-	public String getRating() {
-		return rating;
+
+	public String getLecture_rating() {
+		return lecture_rating;
 	}
-	public void setRating(String rating) {
-		this.rating = rating;
+	public void setLecture_rating(String lecture_rating) {
+		this.lecture_rating = lecture_rating;
+	}
+	public String getLecture_sitename() {
+		return lecture_sitename;
+	}
+	public void setLecture_sitename(String lecture_sitename) {
+		this.lecture_sitename = lecture_sitename;
 	}
 	public int getView_count() {
 		return view_count;
