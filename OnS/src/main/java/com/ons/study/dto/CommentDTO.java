@@ -1,6 +1,7 @@
 package com.ons.study.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
@@ -14,8 +15,23 @@ public class CommentDTO {
 	private String contents;
 	private LocalDateTime createdTime;
 	private LocalDateTime updatedTime;
+	private List<CommentDTO> childComments;
+	private boolean isDeleted;
 	UserDTO user;
 	
+	
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+	public List<CommentDTO> getChildComments() {
+		return childComments;
+	}
+	public void setChildComments(List<CommentDTO> childComments) {
+		this.childComments = childComments;
+	}
 	public UserDTO getUser() {
 		return user;
 	}

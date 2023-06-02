@@ -11,5 +11,10 @@ import com.ons.study.dto.CommentDTO;
 @Repository
 public interface CommentDAO {
 	public List<CommentDTO> getCommentsById(long contentId);
+	public List<CommentDTO> getChildCommentsById(long contentId);
 	public String getUserNicknameById(long userId);
+	public long getLastCommentIdByUser(long userId, long contentId);
+	public int insertComment(CommentDTO comment);
+	public int deleteComment(CommentDTO comment);
+	public int modifyComment(CommentDTO comment);
 }

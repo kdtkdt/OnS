@@ -43,8 +43,7 @@ public class QnAContentService {
 	public List<CommentDTO> getCommentsById(long contentId) {
 		List<CommentDTO> dtoList = commentsDao.getCommentsById(contentId);
 		for (var dto : dtoList) {
-			long userId = dto.getUserId();
-			dto.setNickname(commentsDao.getUserNicknameById(userId));
+			dto.setChildComments(commentsDao.getChildCommentsById(dto.getId()));
 		}
 		return dtoList;
 	}

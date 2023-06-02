@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="com.ons.study.dto.QnAContentDTO"%>
@@ -15,9 +16,10 @@
 	integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
 	crossorigin="anonymous"></script>
 
-<link href="./css/import.css" rel="stylesheet" type="text/css" />
-<script src="./js/qnapostview.js"></script>
-<script src="./js/menu.js"></script>
+<link href="/css/import.css" rel="stylesheet" type="text/css" />
+<script src="/js/qnapostview.js"></script>
+<script src="/js/menu.js"></script>
+<script src="/js/comment.js"></script>
 
 <title>OnS | 온라인 스터디</title>
 </head>
@@ -33,19 +35,15 @@
 			<div>
 				<h1 id="post-title" class="mb10">${qnaContent.getTitle()}</h1>
 				<p id="post-info">
-					<%
-					QnAContentDTO dto = (QnAContentDTO) request.getAttribute("qnaContent");
-					DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd a hh:mm");
-					out.println("<span id='view-count'>&nbsp;" + dto.getViewCount() + "</span><span>조회수</span>");
-					out.println("<span id='post-datetime'>" + dto.getCreatedTime().format(dtf) + "&nbsp;·&nbsp;</span>");
-					out.println("<span id='username' class='fon-bold'>" + dto.getNickname() + "&nbsp;</span>");
-					%>
+					<span id='view-count'>&nbsp;${qnaContent.getViewCount()}</span><span>조회수</span>
+					<span id='post-datetime'>
+						${qnaContent.getCreatedTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd a hh:mm"))}
+						&nbsp;·&nbsp;</span> <span id='username' class='fon-bold'>${qnaContent.getNickname()}&nbsp;</span>
 				</p>
 			</div>
 			<div id="content-delimeter" class="mt10 mb10"></div>
 			<div id="content" class="mt10 mb10 fon-fam-ver">
-				${qnaContent.getContents()}
-			</div>
+				${qnaContent.getContents()}</div>
 			<div class="mt20 mb20">
 				<c:forEach items="${tags }" var="tag">
 					<span class="tag fon-11">${tag }</span>
@@ -55,36 +53,94 @@
 			<!-- 수정/삭제는 게시글 작성자일 때만 보이게 수정 필요 -->
 			<div id="button-box">
 				<button id="list-button" class="ml10 pt5 pb5 pl20 pr20 fon-13">목록</button>
-				<button id="delete-button" class="ml10 pt5 pb5 pl20 pr20 fon-13">삭제</button>
-				<button id="modify-button" class="ml10 pt5 pb5 pl20 pr20 fon-13">수정</button>
+				<c:if test="${qnaContent.getUserId() == user.getId()}">
+					<button id="delete-button" class="ml10 pt5 pb5 pl20 pr20 fon-13">삭제</button>
+					<button id="modify-button" class="ml10 pt5 pb5 pl20 pr20 fon-13">수정</button>
+				</c:if>
 			</div>
 		</div>
 
 		<!-- 댓글 -->
 		<div id="comment-box" class="pppp20 mr20 ml20 mb20 mt10">
+			<c:if test="${empty user}">
+				<h3 style="text-align: center">답변을 남기시려면 로그인 해주세요.</h3>
+				<div id="content-delimeter" class="mt20 mb10"></div>
+			</c:if>
 			<div id="comment-count-box" class="pppp10 flex">
 				<h3>답변</h3>
-				<h3 id="comment-counter" class="ml5"><%= dto.getCommentCount() %></h3>
+				<h3 id="comment-counter" class="ml5">${qnaContent.getCommentCount()}</h3>
 			</div>
-			<textarea id="comment-input" class="pppp20"></textarea>
-			<div id="button-box">
-				<button id="comment-button"
-					class="mt20 mb10 ml10 pt5 pb5 pl20 pr20 fon-13">등록</button>
-			</div>
-			<!-- 더미 데이터1 -->
-			<c:forEach items="${comments }" var="comment">
+
+			<!-- 로그인한 경우에만 댓글 등록 가능 -->
+			<c:if test="${not empty user}">
+				<input type="hidden" class="user-id" value="${user.getId()}" />
+				<textarea class="comment-input pppp20"></textarea>
+				<div id="button-box">
+					<button class="comment-save-button mt20 mb10 ml10 pt5 pb5 pl20 pr20 fon-13">등록</button>
+				</div>
+			</c:if>
+
+			<c:forEach items="${comments}" var="comment">
 				<div class="pppp10 comment-content-box">
-					<input type=hidden class="comment-parent" value="${comment.getParentId()}"/>
+					<!-- 댓글 관련 정보 저장 -->
+					<input type=hidden class="comment-parent"
+						value="${comment.getParentId()}" />
+					<input type=hidden class="comment-id"
+						value="${comment.getId()}" />
+
 					<div id="comment-info" class="flex">
 						<p id="comment-username" class="fon-bold">${comment.getNickname()}</p>
-						<p id="comment-time" class="ml10">${comment.getCreatedTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd a hh:mm"))}</p>
+						<p id="comment-time" class="ml10">
+							${comment.getCreatedTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd a hh:mm"))}
+						</p>
 					</div>
-					<div class="comment-content">
-						<p>${comment.getContents()}</p>
+					<div class="comment-content mt10">
+						<p class="comment" style="width: 90%">${comment.getContents()}</p>
+						<c:if test="${comment.getUserId() == user.getId() && !comment.isDeleted()}">
+							<div>
+								<a class="comment-modify-button">수정</a>
+								<span>&#124;</span>
+								<a class="comment-delete-button">삭제</a>
+							</div>
+						</c:if>
 					</div>
+					<c:if test="${not empty user}">
+						<button class="comment-reply-button mt20 mb10 pt5 pb5 pl20 pr20 fon-13">🗨️답글 달기</button>
+					</c:if>
+
+					<div id="content-delimeter" class="mt20 mb10"></div>
+					<!-- 대댓글 -->
+					<c:forEach items="${comment.childComments}" var="childComment">
+						<div class="pppp10 comment-content-box">
+							<!-- 댓글 관련 정보 저장 -->
+							<input type=hidden class="comment-parent"
+								value="${childComment.getParentId()}" />
+							<input type=hidden class="comment-id"
+								value="${childComment.getId()}" />
+
+							<div class="comment-info flex">
+								<p id="comment-username" class="fon-bold">${childComment.getNickname()}</p>
+								<p id="comment-time" class="ml10">
+									${childComment.getCreatedTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd a hh:mm"))}
+								</p>
+							</div>
+							<div class="comment-content mt10">
+								<p class="comment" style="width: 90%">${childComment.getContents()}</p>
+								<c:if test="${childComment.getUserId() == user.getId()}">
+									<div class="comment-modify-delete-button-box">
+										<a class="comment-modify-button">수정</a>
+										<span>&#124;</span>
+										<a class="comment-delete-button">삭제</a>
+									</div>
+								</c:if>
+							</div>
+							<div id="content-delimeter" class="mt20 mb10"></div>
+						</div>
+					</c:forEach>
+					<!-- 대댓글 끝 -->
 				</div>
-				<div id="content-delimeter" class="mt10 mb10"></div>
-			</c:forEach>			
+			</c:forEach>
+			<!-- 댓글 끝 -->
 		</div>
 
 	</div>
