@@ -1,71 +1,79 @@
-$(document).ready(function(){
-    $("#header").load("header.html", function() {
+$(document).ready(function() {
 
-        // 로고
-        $('#logo').click(function(){
-            location.href = "./boardRecruitment.html?board=1";
-        })
+	const homeRoute = '/recruitmentlist';
 
-        // 로그인/로그아웃
-        if (localStorage.getItem('isLogin')) {
-            $('#username').text(localStorage.getItem('username'));
-            $('#welcome').text('님 환영합니다!');
-            $('#login-logout-button').text('로그아웃');
-        }
+	// 로고
+	$('#logo').click(function() {
+		location.href = homeRoute;
+	})
 
-        $('#login-logout-button').click(function(){
-            if (!localStorage.getItem('isLogin')) {
-                location.href = "./Login.html";
-            } else {
-                alert(`로그아웃 되었습니다.`);
-                $('#username').text('');
-                $('#welcome').text('');
-                $('#login-logout-button').text('로그인');
-                localStorage.removeItem('isLogin');
-                if (location.href.includes('profile.html')) {
-                    location.href = "./boardRecruitment.html?board=1";
-                }
-            }
-        })
+	// 로그인/로그아웃 버튼 클릭
+	$('#login-logout-button').click(function() {
+		if ($(this).text() == '로그인') {
+			location.href = "/login";
+		} else {
+			requestGet('/request-logout');
+			alert(`로그아웃 되었습니다.`);
+			$('#username').text('');
+			$('#welcome').text('');
+			$('#login-logout-button').text('로그인');
+			if (location.href.includes('/profile')) {
+				location.href = homeRoute;
+			}
+		}
+	})
 
-        // 메뉴 스타일
-        $('.menu').css('text-decoration', 'none');
+	function requestGet(url) {
+		$.ajax({
+			url: url,
+			type: 'GET',
+			dataType: 'json',
+			success: function(response) {
+				console.log(response);
+			},
+			error: function(xhr, status, error) {
+				console.error(error);
+			}
+		});
+	}
 
-        $('.menu').click(function(){
-            $('.menu').removeClass("choose");
-            $('.menu').css('color', '#848484');
-            $(this).addClass("choose");
-            $(this).css('color', 'black');
-        });
+	// 메뉴 스타일
+	$('.menu').css('text-decoration', 'none');
 
-        $('.menu').hover(
-            function () {
-                $(this).css('backgroundColor', '#e9ecef');
-            },
-            function () {
-                $(this).css('backgroundColor', 'white');
-            }
-        );
+	$('.menu').click(function() {
+		$('.menu').removeClass("choose");
+		$('.menu').css('color', '#848484');
+		$(this).addClass("choose");
+		$(this).css('color', 'black');
+	});
 
-        const urlParams = new URLSearchParams(window.location.search);
-        let board = urlParams.get('board');
+	$('.menu').hover(
+		function() {
+			$(this).css('backgroundColor', '#e9ecef');
+		},
+		function() {
+			$(this).css('backgroundColor', 'white');
+		}
+	);
 
-        if (location.href.includes('boardRecruitment.html')) {
-            board = 1;
-        } else if (location.href.includes('QnABoard.html')) {
-            board = 2;
-        } else if (location.href.includes('ProofShot.html')) {
-            board = 3;
-        } else if (location.href.includes('ReviewBoard.html')) {
-            board = 4;
-        } else if (location.href.includes('profile.html')) {
-            board = 9;
-        }
+	const urlParams = new URLSearchParams(window.location.search);
+	let board = urlParams.get('board');
 
-        if (board <= 8) {
-            const menuElementList = $('.menu');
-            menuElementList.eq((board-1) % 4).addClass('choose');
-            menuElementList.eq((board-1) % 4).css('color', 'black');
-        }
-    });
+	if (location.href.includes('/recruit')) {
+		board = 1;
+	} else if (location.href.includes('/qna')) {
+		board = 2;
+	} else if (location.href.includes('ProofShot.html')) {
+		board = 3;
+	} else if (location.href.includes('/review')) {
+		board = 4;
+	} else if (location.href.includes('/profile')) {
+		board = 9;
+	}
+
+	if (board <= 8) {
+		const menuElementList = $('.menu');
+		menuElementList.eq((board - 1) % 4).addClass('choose');
+		menuElementList.eq((board - 1) % 4).css('color', 'black');
+	}
 })

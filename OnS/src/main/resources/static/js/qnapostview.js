@@ -3,20 +3,15 @@ $(document).ready(function () {
     const urlParams = new URLSearchParams(window.location.search);
     const board = urlParams.get('board');
     let filename = '';
+    
     if (board == 1 || board == 5) {
 
         filename = 'postviewRecruitment';
 
-    } else if (board == 2 || board == 6) {
+    } else if (location.href.includes('/qnapostview')) {
 
         filename = 'QnABoard';
         
-        const content = localStorage.getItem('text');
-        const title = localStorage.getItem('title');
-        if (content != undefined || title != undefined) {
-            $('#post-title').text(title);
-            $('#content').html(content);
-        } 
         // 버튼 위에 마우스 올렸을 때 검은색으로 변하게 하기
         $('#button-box > button').hover(
             function () {
@@ -28,7 +23,7 @@ $(document).ready(function () {
         );
     
         $('#list-button').click(function () {
-            const url = `./${filename}.html?board=${board}`;
+            const url = `/qnaboard`;
             window.location.href = url;
         });
     
@@ -67,8 +62,17 @@ $(document).ready(function () {
             form.submit();
         });
     }
+	
+	var elements = $('.comment-parent'); // 동일한 클래스를 가진 요소들 가져오기
 
-    let commentCounter = parseInt($('#comment-counter').text());
+    elements.each(function(index, element) {
+        var value = $(element).attr('value'); // value 속성의 값 가져오기
+
+        // 대댓글이 아닌 경우 parentId가 없어 0이 되므로 0보다 큰 경우 왼쪽 마진 추가
+        if (value > 0) {
+            $(element).siblings('#comment-info, .comment-content').addClass('ml30');
+        }
+    });
 
     // 시연용 댓글 추가 기능
     $('#comment-button').click(function () {

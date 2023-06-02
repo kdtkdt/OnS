@@ -2,22 +2,39 @@ package com.ons.study.dto;
 
 import org.springframework.stereotype.Component;
 
-
 @Component
 public class RecruitmentDTO {
-	int id, content_id, user_id, parent_id;
-	String contents, created_time, updated_time;
+	int id, user_id;
+	String title, contents, created_time, updated_time;
+	int board_type, like, view_count;
+	StudyDTO study;
+	SkillDTO skill;
+	UserDTO user;
+	CommentDTO comment;
+	
+	public CommentDTO getComment() {
+		return comment;
+	}
+	public void setComment(CommentDTO comment) {
+		this.comment = comment;
+	}
+	public UserDTO getUser() {
+		return user;
+	}
+	public void setUser(UserDTO user) {
+		this.user = user;
+	}
+	public SkillDTO getSkill() {
+		return skill;
+	}
+	public void setSkill(SkillDTO skill) {
+		this.skill = skill;
+	}
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
-	}
-	public int getContent_id() {
-		return content_id;
-	}
-	public void setContent_id(int content_id) {
-		this.content_id = content_id;
 	}
 	public int getUser_id() {
 		return user_id;
@@ -25,11 +42,11 @@ public class RecruitmentDTO {
 	public void setUser_id(int user_id) {
 		this.user_id = user_id;
 	}
-	public int getParent_id() {
-		return parent_id;
+	public String getTitle() {
+		return title;
 	}
-	public void setParent_id(int parent_id) {
-		this.parent_id = parent_id;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	public String getContents() {
 		return contents;
@@ -49,4 +66,29 @@ public class RecruitmentDTO {
 	public void setUpdated_time(String updated_time) {
 		this.updated_time = updated_time;
 	}
+	public int getBoard_type() {
+		return board_type;
+	}
+	public void setBoard_type(int board_type) {
+		this.board_type = board_type;
+	}
+	public int getLike() {
+		return like;
+	}
+	public void setLike(int like) {
+		this.like = like;
+	}
+	public int getView_count() {
+		return view_count;
+	}
+	public void setView_count(int view_count) {
+		this.view_count = view_count;
+	}
+	public StudyDTO getStudy() {
+		return study;
+	}
+	public void setStudy(StudyDTO study) {
+		this.study = study;
+	}
+	
 }

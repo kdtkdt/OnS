@@ -209,6 +209,10 @@ header > div > div {
     cursor: pointer;
 }
 
+#tag-box {
+	height: 30px;
+}
+
 #question-info-box {
     display: flex;
     justify-content: space-between;
