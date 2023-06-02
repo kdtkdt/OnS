@@ -250,7 +250,12 @@ header > div > div {
 #list-button,
 #delete-button,
 #modify-button,
-#comment-button,
+.comment-save-button,
+.comment-save-modify-button,
+.comment-modify-cancel-button,
+.comment-reply-button,
+.comment-cancel-reply-button,
+.comment-save-reply-button,
 #recommend-button,
 .button {
     color: white;
@@ -263,7 +268,10 @@ header > div > div {
     margin: 10px;
 }
 
-#comment-input {
+.comment-input,
+.comment-modify-input,
+.comment-reply-input
+{
     resize: none;
     border: 2px solid #d3d3d3;
     border-radius: 3px;
