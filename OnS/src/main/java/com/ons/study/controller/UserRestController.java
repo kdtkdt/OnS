@@ -37,4 +37,18 @@ public class UserRestController {
 		return ResponseEntity.ok().body(new UserDTO());
 	}
 	
+	@PostMapping("/request-signup")
+	public ResponseEntity<Boolean> requestSignup(@RequestBody UserDTO user, HttpSession session) {
+		UserDTO newUser = new UserDTO();
+		newUser.setEmail(user.getEmail());
+		newUser.setPassword(user.getPassword());
+		newUser.setNickname(user.getNickname());
+		boolean isSignedUp = false;
+		if (userService.insertUser(newUser) > 0) {
+			isSignedUp = true;
+		}
+		return ResponseEntity.ok().body(isSignedUp);
+		
+	}
+	
 }
