@@ -74,4 +74,8 @@ public class QnAContentService {
 		tagDto.setName(tag);
 		return tagDao.insertTag(tagDto);
 	}
+	
+	public int deleteTagByContentId(long contentId) {
+		return tagDao.deleteTagByContentId(contentId);
+	}
 }

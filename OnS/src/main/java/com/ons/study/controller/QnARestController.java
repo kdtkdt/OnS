@@ -39,25 +39,27 @@ public class QnARestController {
 	}
 	
 	@PutMapping("/api/qna/modify")
-	public ResponseEntity<Boolean> updateQna(@RequestBody QnAContentDTO qnaContent, HttpSession session) {
+	public ResponseEntity<QnAContentDTO> updateQna(@RequestBody QnAContentDTO qnaContent, HttpSession session) {
 		UserDTO user = (UserDTO) session.getAttribute("user");
 		final long userIdFromClient = qnaContent.getUserId();
-		System.out.println(qnaContent.isDeleted());
 		if (user != null && user.getId() == userIdFromClient) {
 			if (qnaContentService.updateQnaContent(qnaContent) < 1) {
-				return ResponseEntity.ok(false);
+				return ResponseEntity.ok(new QnAContentDTO());
 			}
 			
-			if (qnaContent.getTags() != null) {
+			long contentId = qnaContent.getId();
+			if (qnaContent.getTags().length > 0) {
 				// 기존 태그 삭제
-				
+				qnaContentService.deleteTagByContentId(contentId);
 				// 태그 추가
 				for (String tagName : qnaContent.getTags()) {
-					qnaContentService.insertTag(tagName, qnaContent.getId());
+					qnaContentService.insertTag(tagName, contentId);
 				}
 			}
 			
-			return ResponseEntity.ok(true);
+			qnaContent = new QnAContentDTO();
+			qnaContent.setId(contentId);
+			return ResponseEntity.ok(qnaContent);
 		} else {
 			return ResponseEntity.notFound().build();
 		}

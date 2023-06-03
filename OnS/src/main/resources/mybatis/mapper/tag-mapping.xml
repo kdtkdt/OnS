@@ -18,4 +18,9 @@
 	VALUES (#{contentId}, #{name})
 </insert>
 
+<delete id="deleteTagByContentId" parameterType="long">
+	DELETE FROM tag
+	WHERE content_id = #{contentId}
+</delete>
+
 </mapper>

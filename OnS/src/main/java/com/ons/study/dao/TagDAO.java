@@ -12,4 +12,5 @@ import com.ons.study.dto.TagDTO;
 public interface TagDAO {
 	public List<TagDTO> getTagsByContentId(long contentId);
 	public int insertTag(TagDTO tagdto);
+	public int deleteTagByContentId(long contentId);
 }
