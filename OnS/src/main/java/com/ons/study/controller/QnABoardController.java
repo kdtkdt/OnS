@@ -16,7 +16,7 @@ import com.ons.study.dto.UserDTO;
 public class QnABoardController {
 	
 	@Autowired
-	QnAContentService service;
+	QnAContentService qnaContentService;
 	
 	// 질문 게시판 목록 확인
 	@GetMapping("/qnaboard")
@@ -24,8 +24,8 @@ public class QnABoardController {
 			@RequestParam(value="page", required=false, defaultValue="1") int page,
 			HttpSession session) {
 		isLogin(model, session);
-		model.addAttribute("qnaLists", service.getQnaContentByPage(page));
-		model.addAttribute("qnaContentsTotalCount", service.getQnaContentTotalCount());
+		model.addAttribute("qnaLists", qnaContentService.getQnaContentByPage(page));
+		model.addAttribute("qnaContentsTotalCount", qnaContentService.getQnaContentTotalCount());
 		model.addAttribute("pageLimit", QnAContentService.PAGE_LIMIT);
 		return "QnABoard";
 	}
@@ -50,15 +50,16 @@ public class QnABoardController {
         } else {
         	isLogin(model, session);
         	long idLong = Long.parseLong(id);
-        	model.addAttribute("qnaContent", service.getQnaContentById(idLong));
-        	model.addAttribute("tags", service.getTagsByContentId(idLong));
-        	model.addAttribute("comments", service.getCommentsById(idLong));
+        	model.addAttribute("qnaContent", qnaContentService.getQnaContentById(idLong));
+        	model.addAttribute("tags", qnaContentService.getTagsByContentId(idLong));
+        	model.addAttribute("comments", qnaContentService.getCommentsById(idLong));
         	// 요청 파라미터가 입력되었을 경우.
         	return "QnAPostView";        	
         }
 	}
 	
 	private void isLogin(Model model, HttpSession session) {
+		// 사용자가 로그인하여 session에 사용작자 존재하는 경우 model에 사용자 정보를 추가한다.
 		UserDTO user = (UserDTO) session.getAttribute("user");
 		if (user != null) model.addAttribute("user", user);
 	}

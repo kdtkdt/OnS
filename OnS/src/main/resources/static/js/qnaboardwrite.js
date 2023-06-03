@@ -1,109 +1,153 @@
-$(document).ready(function(){
-    // query 가져오기
-    const urlParams = new URLSearchParams(window.location.search);
-    const board = urlParams.get('board');
-    let filename = '';
+$(document).ready(function() {
+	// query 가져오기
+	const urlParams = new URLSearchParams(window.location.search);
+	const board = urlParams.get('board');
+	let routeName = '';
+	let requestUrl = '';
 
-    // 에디터 초기화
-    let quill = new Quill('#editor', {
-        theme: 'snow'
-    });
+	// 에디터 초기화
+	let quill = new Quill('#editor', {
+		theme: 'snow'
+	});
 
-    if (board == 2) {
-        // 질문 올리기 버튼으로 진입한 경우
-        const title = "질문을 작성해주세요."
-        $('#title').attr('placeholder', title);
-        let text = 
-        `[질문 내용 예시]
+	if (location.href.includes('/qnawrite')) {
+		// 질문 올리기 버튼으로 진입한 경우
+		const title = "질문을 작성해주세요."
+		$('#title').attr('placeholder', title);
+		let text =
+			`[질문 내용 예시]
         - 학습 관련 질문을 남겨주세요. 
         - 상세히 작성하면 더 좋아요!
         - 먼저 유사한 질문이 있었는지 검색해보세요.
         - 서로 예의를 지키며 존중하는 문화를 만들어가요.`
 
-        quill.setText(text);
-        filename = 'QnABoard';
-    } else if (board == 6) {
-        // 수정 버튼으로 진입한 경우
+		quill.setText(text);
+		routeName = 'qnaboard';
+		requestUrl = '/api/qna/write';
+	} else if (location.href.includes('/qnamodify')) {
+		// 수정 버튼으로 진입한 경우
 
-        // 화면 초기화
-        $('#title').val(localStorage.getItem('title'));
-        quill.root.innerHTML = localStorage.getItem('text');
+		// 화면 초기화
+		$('#title').val(localStorage.getItem('title'));
+		quill.root.innerHTML = localStorage.getItem('text');
 
-        // 이동 대상 설정
-        filename = 'QnAPostView';
+		// 수정 후 이동 대상 설정 - id 도 추가 필요
+		routeName = 'qnapostview';
 
-        // 기존 태그 추가하기
-        $('#tag-box').append('<span class="tag fon-11">#Elasticsearch X</span>');
-        $('#tag-box').append('<span class="tag fon-11">#Solr X</span>');
-        if ($('#tag-box').children().length > 0) {
-            $('#tag-box').addClass('mt20 mb20');
-        }
-    }
+		// 기존 태그 추가하기
+		$('#tag-box').append('<span class="tag fon-11">#Elasticsearch X</span>');
+		$('#tag-box').append('<span class="tag fon-11">#Solr X</span>');
+		if ($('#tag-box').children().length > 0) {
+			$('#tag-box').addClass('mt20 mb20');
+		}
+		requestUrl = '/api/qna/modify';
+	}
 
-    // 태그 추가 시 삭제 대상 목록 갱신
-    function refreshDeleteTagList() {
-        $('.tag').click(function(){
-            $(this).remove();
-        })
-    }
+	// 태그 추가 시 삭제 대상 목록 갱신
+	function refreshDeleteTagList() {
+		$('.tag').click(function() {
+			$(this).remove();
+		})
+	}
 
-    // 질문 게시판 태그 입력, 삭제 기능
-    if (board == 2 || board == 6) {
-        // 태그 입력기
-        $('#tag-editor').append(`<div>
-        <input type="text" id="tag-input" class="fon-15 ml10 mt20 mb20 input-box" placeholder="추가하려는 태그를 입력하고 엔터키를 눌러주세요."></input>
+	// 질문 게시판 태그 입력, 삭제 기능
+	let tags = []; // 태그 저장용
+	if (location.href.includes('/qna')) {
+		// 태그 입력기
+		$('#tag-editor').append(`<div>
+        <input type="text" id="tag-input" class="fon-15 ml5 mr5 mt20 input-box" placeholder="추가하려는 태그를 입력하고 엔터키를 눌러주세요."></input>
+        <p class="ml5 mr5 mt5">태그는 최대 5개, 20글자 까지 입력 가능하며, 중복된 태그는 입력 불가능합니다.</p>
         </div>`);
+		
+		$("#tag-input").keypress(function(event) {
+			if (event.which === 13) {
+				// 엔터키 입력 감지
+				const tagName = $('#tag-input').val()
+				if (tagName == '') {
+					// 입력된 값이 아무것도 없는 경우 동작하지 않음
+					return;
+				} else if (tags.length == 5){
+					// 태그 갯수 5개로 제한
+					alert('태그는 최대 5개 까지 입력 가능합니다.');
+					return;
+				} else if (tags.includes(tagName)) {
+					// 중복 태그 제한
+					alert('이미 존재하는 태그입니다.');
+					return;
+				} else if (tagName.length > 20) {
+					// 태그 길이 제한
+					alert('태그의 길이가 너무 깁니다.');
+					return;
+				}
+				
+				tags.push(tagName);
 
-        $("#tag-input").keypress(function(event) {
-            if (event.which === 13) {
-                // 엔터키 입력 감지
-                
-                if ($('#tag-input').val() == '') {
-                    return;
-                }
+				if ($('#tag-box').children().length == 0) {
+					$('#tag-box').addClass('mt20 mb20');
+				}
 
-                if ($('#tag-box').children().length == 0) {
-                    $('#tag-box').addClass('mt20 mb20');
-                }
+				$('#tag-box').append(`<span class="tag fon-11">#${$("#tag-input").val()} X</span>`);
+				$('#tag-input').val('');
+				refreshDeleteTagList();
+			}
+		});
 
-                $('#tag-box').append(`<span class="tag fon-11">#${$("#tag-input").val()} X</span>`);
-                $('#tag-input').val('');
-                refreshDeleteTagList();
-            }
-        });
+		// 태그 목록 갱신
+		refreshDeleteTagList();
+	}
 
-        // 태그 선택시 삭제 기능
-        refreshDeleteTagList();
-    }
 
-    
 
-    quill.focus();
+	quill.focus();
 
-    //save 버튼 클릭시 입력값 저장, 창 이동
-    $("#save").on('click', function(){
-        let content = quill.getText().replace(/\s+/g, '');
-        if ($('#title').val() == '' || content == '') {
-            alert('제목 혹은 내용이 작성되지 않았습니다.');
-            return;
-        }
+	//save 버튼 클릭시 입력값 저장, 창 이동
+	$("#save").on('click', function() {
+		let content = quill.getText().replace(/\s+/g, '');
+		if ($('#title').val() == '' || content == '') {
+			alert('제목 혹은 내용이 작성되지 않았습니다.');
+			return;
+		}
+		
+		// 데이터 저장 요청
+		let data = {
+			'title': $("#title").val(),
+			'contents': quill.root.innerHTML,
+			'userId': $('.user-id').val(),
+			'tags': tags,
+		};
+		
+		for (let d in data) {
+			console.log(data[d]);
+		}
+		
+		saveRequest(requestUrl, 'POST', data);
+		
+	});
+	
+	function saveRequest(url, method, data) {
+		$.ajax({
+			url: url, // 백엔드 서버의 저장 요청을 처리하는 URL
+			type: method,
+			dataType: 'json',
+			data: JSON.stringify(data),
+			contentType: 'application/json',
+			success: function(response) {
+				// 서버에 저장 완료 후 서버에서 응답을 받았을 때 실행할 코드
+				alert("저장이 완료되었습니다.");
+				// 게시글 id 받아와서 작성 완료된 게시글로 이동
+				location.href = `/qnapostview?id=${response.id}`
+			},
+			error: function(xhr, status, error) {
+				// 요청 실패 시 실행할 코드
+				alert("오류가 발생하였습니다. 나중에 다시 시도해주세요.");
+			}
+		});
+	}
 
-        //시간 저장
-        let nowTime = new Date().toLocaleString();
-        localStorage.setItem("time", nowTime);
-        
-        //제목, 내용 입력값 저장
-        localStorage.setItem("title", $("#title").val());
-        localStorage.setItem("text", quill.root.innerHTML);
-        
-        //넘어가는 화면 지정(목록 화면)?
-        location.href = `./${filename}.html?board=${board}`;
-    });
-    
-    //delete 버튼 클릭시 이전 페이지(게시글 조회 화면) 이동
-    $("#delete").on('click', function(){
-        location.href = `./${filename}.html?board=${board}`;
-    });
+	//delete 버튼 클릭시 이전 페이지(게시판 화면) 이동
+	$("#delete").on('click', function() {
+		location.href = `/${routeName}`;
+	});
 
-    
+
 })

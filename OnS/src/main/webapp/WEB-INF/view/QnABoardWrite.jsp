@@ -32,6 +32,7 @@
 	
 	<br />
 	<div id="wrap">
+		<input type="hidden" class="user-id" value="${user.getId()}" />
 		<div class="board-box pppp20">
 			<div id="titlearea" class="mb15">
 				<input type="text" id="title" class="fon-20 pb5"

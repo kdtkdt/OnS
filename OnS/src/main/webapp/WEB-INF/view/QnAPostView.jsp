@@ -46,7 +46,7 @@
 				${qnaContent.getContents()}</div>
 			<div class="mt20 mb20">
 				<c:forEach items="${tags }" var="tag">
-					<span class="tag fon-11">${tag }</span>
+					<span class="tag fon-11">#&nbsp;${tag }</span>
 				</c:forEach>
 			</div>
 			<div id="content-delimeter" class="mt10 mb10"></div>

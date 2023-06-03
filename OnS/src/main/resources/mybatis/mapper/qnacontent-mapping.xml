@@ -45,4 +45,17 @@
     WHERE content_id = #{contentId}
 </select>
 
+<insert id="insertQnaContent" parameterType="qnacontentdto">
+	INSERT INTO content(user_id, title, contents, board_type)
+	VALUES (#{userId}, #{title}, #{contents}, 2)
+</insert>
+
+<select id="getLastContentIdByUser" resultType="long">
+	SELECT id
+	FROM content
+	WHERE user_id = #{userId}
+	ORDER BY created_time DESC
+	LIMIT 1
+</select>
+
 </mapper>
