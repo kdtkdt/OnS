@@ -26,8 +26,6 @@ public class CommentRestController {
 		int insertCount = commentService.insertComment(comment);
 		if (user != null && user.getId() == comment.getUserId() && insertCount == 1) {
 			CommentDTO commentDto = new CommentDTO();
-			System.out.println(comment.getUserId());
-			System.out.println(comment.getContentId());
 			commentDto.setId(commentService.getLastCommentIdByUser(comment.getUserId(), comment.getContentId()));
 			return ResponseEntity.ok(commentDto);
 		} else {

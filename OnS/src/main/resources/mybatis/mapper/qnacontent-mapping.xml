@@ -16,6 +16,7 @@
     <result property="commentCount" column="comment_count" />
     <result property="paths" column="path" javaType="java.lang.String" jdbcType="ARRAY" />
     <result property="nickname" column="nickname" />
+    <result property="isDeleted" column="deleted" />
 </resultMap>
 
 <!-- 질문 게시판의 게시물을 페이지별로 조회하는 쿼리 -->
@@ -44,5 +45,28 @@
     FROM tag
     WHERE content_id = #{contentId}
 </select>
+
+<insert id="insertQnaContent" parameterType="qnacontentdto">
+	INSERT INTO content(user_id, title, contents, board_type)
+	VALUES (#{userId}, #{title}, #{contents}, 2)
+</insert>
+
+<update id="updateQnaContent" parameterType="qnacontentdto">
+	UPDATE content SET title = #{title}, contents = #{contents}, deleted = #{isDeleted}
+	WHERE id = #{id}
+</update>
+
+<select id="getLastContentIdByUser" resultType="long">
+	SELECT id
+	FROM content
+	WHERE user_id = #{userId}
+	ORDER BY created_time DESC
+	LIMIT 1
+</select>
+
+<delete id="deleteQnaContentById" parameterType="long">
+	DELETE FROM content
+	WHERE id = #{id}
+</delete>
 
 </mapper>

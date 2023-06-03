@@ -46,14 +46,14 @@
 				${qnaContent.getContents()}</div>
 			<div class="mt20 mb20">
 				<c:forEach items="${tags }" var="tag">
-					<span class="tag fon-11">${tag }</span>
+					<span class="tag fon-11">#&nbsp;${tag }</span>
 				</c:forEach>
 			</div>
 			<div id="content-delimeter" class="mt10 mb10"></div>
 			<!-- 수정/삭제는 게시글 작성자일 때만 보이게 수정 필요 -->
 			<div id="button-box">
 				<button id="list-button" class="ml10 pt5 pb5 pl20 pr20 fon-13">목록</button>
-				<c:if test="${qnaContent.getUserId() == user.getId()}">
+				<c:if test="${qnaContent.getUserId() == user.getId()}"> <!--  && !qnaContent.isDeleted()  -->
 					<button id="delete-button" class="ml10 pt5 pb5 pl20 pr20 fon-13">삭제</button>
 					<button id="modify-button" class="ml10 pt5 pb5 pl20 pr20 fon-13">수정</button>
 				</c:if>
@@ -87,6 +87,8 @@
 						value="${comment.getParentId()}" />
 					<input type=hidden class="comment-id"
 						value="${comment.getId()}" />
+					<input type=hidden class="comment-user-id"
+						value="${comment.getUserId()}" />
 
 					<div id="comment-info" class="flex">
 						<p id="comment-username" class="fon-bold">${comment.getNickname()}</p>
@@ -117,6 +119,8 @@
 								value="${childComment.getParentId()}" />
 							<input type=hidden class="comment-id"
 								value="${childComment.getId()}" />
+							<input type=hidden class="comment-user-id"
+								value="${childComment.getUserId()}" />
 
 							<div class="comment-info flex">
 								<p id="comment-username" class="fon-bold">${childComment.getNickname()}</p>
