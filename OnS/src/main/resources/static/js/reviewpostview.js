@@ -10,30 +10,8 @@ $(document).ready(function () {
         }
     );
 
-    $('#delete-button').click(function () {
-        if (confirm("정말 삭제하시겠습니까?")) {
-            // 삭제 요청
-            const url = './ReviewBoard.html?board=4';
-            window.location.href = url;
-        }
-    });
-
     $('#modify-button').click(function () {
-        // 게시글 제목과 내용 수정 페이지로 넘겨주기
-
-        // 제목과 글 내용 가져오기
-        const title = $('#post-title').val();
-        const content = $('#content').val();
-
-        // 폼을 생성하고 데이터를 추가
-        const form = $('<form method="GET" action="./ReviewModify.html"></form>');
-        form.append('<input type="text" name="board" value="' + 4 + '"/>');
-        // form.append('<input type="hidden" name="title" value="' + title + '"/>');
-        // form.append('<input type="hidden" name="content" value="' + content + '"/>');
-
-        // 폼을 body에 추가하고 전송
-        $('body').append(form);
-        form.submit();
+      location.href="updateboard"
         
     });
 

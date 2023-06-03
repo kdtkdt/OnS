@@ -9,8 +9,17 @@ $(document).ready(function () {
         }
     );
 
+	$("#savebtn").hover(
+        function () {
+            $(this).css('backgroundColor', 'black');
+        },
+        function () {
+            $(this).css('backgroundColor', '#404040');
+        }
+    );
+    
 	//save 버튼 클릭시 입력값 저장, 창 이동
-	$("#savebtn").on('click', function(){
+/*	$("#savebtn").on('click', function(){
 		
 	//시간 저장
 	let nowTime = new Date().toLocaleString();
@@ -28,17 +37,14 @@ $(document).ready(function () {
 	alert("저장되었습니다.");
 	//넘어가는 화면 지정(목록 화면)?
 	window.location.href = "./ReviewBoard.html?board=4";
-	});
+	});*/
 	
 	//delete 버튼 클릭시 이전 페이지(게시글 조회 화면) 이동
 	$("#backbtn").on('click', function(){
 	alert("이전 페이지로 돌아갑니다.");
-		window.location.href = "./ReviewBoard.html?board=4"; 
+	window.location.href = "/reviewboard"; 
 	});
 	
-	//강의명 작성 클릭시 배경색 변화
-    $("#title").on('click', function(){
-		$(this).css('backgroundColor', '#d1d1d1');
-	})
+	
  
 });//ready end

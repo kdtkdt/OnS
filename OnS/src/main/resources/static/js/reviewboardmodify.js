@@ -1,4 +1,4 @@
-$(document).ready(function () {
+/*$(document).ready(function () {
 
     // 버튼 위에 마우스 올렸을 때 검은색으로 변하게 하기
     $('.btn-box > button').hover(
@@ -23,4 +23,4 @@ $(document).ready(function () {
        
      });
 
-});
+});*/
