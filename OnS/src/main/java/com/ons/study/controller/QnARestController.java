@@ -48,9 +48,9 @@ public class QnARestController {
 			}
 			
 			long contentId = qnaContent.getId();
+			// 기존 태그 삭제
+			qnaContentService.deleteTagByContentId(contentId);
 			if (qnaContent.getTags().length > 0) {
-				// 기존 태그 삭제
-				qnaContentService.deleteTagByContentId(contentId);
 				// 태그 추가
 				for (String tagName : qnaContent.getTags()) {
 					qnaContentService.insertTag(tagName, contentId);

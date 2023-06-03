@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpSession;
 
 import com.ons.study.dto.QnAContentDTO;
 import com.ons.study.dto.UserDTO;
+import com.ons.study.dto.CommentDTO;
 
 @Controller
 public class QnABoardController {
@@ -78,10 +79,10 @@ public class QnABoardController {
             return HOME_ROUTE;
         } else {
         	addUserInfoToModel(model, session);
-        	long idLong = Long.parseLong(id);
-        	model.addAttribute("qnaContent", qnaContentService.getQnaContentById(idLong));
-        	model.addAttribute("tags", qnaContentService.getTagsByContentId(idLong));
-        	model.addAttribute("comments", qnaContentService.getCommentsById(idLong));
+        	long contentId = Long.parseLong(id);
+        	model.addAttribute("qnaContent", qnaContentService.getQnaContentById(contentId));
+        	model.addAttribute("tags", qnaContentService.getTagsByContentId(contentId));
+        	model.addAttribute("comments", qnaContentService.getCommentsById(contentId));
         	// 요청 파라미터가 입력되었을 경우.
         	return "QnAPostView";        	
         }
