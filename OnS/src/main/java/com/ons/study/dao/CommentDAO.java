@@ -11,7 +11,7 @@ import com.ons.study.dto.CommentDTO;
 @Repository
 public interface CommentDAO {
 	public List<CommentDTO> getCommentsById(long contentId);
-	public List<CommentDTO> getChildCommentsById(long contentId);
+	public List<CommentDTO> getChildCommentsById(long contentId, long parentId);
 	public String getUserNicknameById(long userId);
 	public long getLastCommentIdByUser(long userId, long contentId);
 	public int insertComment(CommentDTO comment);
