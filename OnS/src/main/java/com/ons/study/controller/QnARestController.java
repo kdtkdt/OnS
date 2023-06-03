@@ -2,7 +2,9 @@ package com.ons.study.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,6 +33,49 @@ public class QnARestController {
 			qnaContent = new QnAContentDTO();
 			qnaContent.setId(newQnaContentId);
 			return ResponseEntity.ok(qnaContent);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
+	@PutMapping("/api/qna/modify")
+	public ResponseEntity<Boolean> updateQna(@RequestBody QnAContentDTO qnaContent, HttpSession session) {
+		UserDTO user = (UserDTO) session.getAttribute("user");
+		final long userIdFromClient = qnaContent.getUserId();
+		System.out.println(qnaContent.isDeleted());
+		if (user != null && user.getId() == userIdFromClient) {
+			if (qnaContentService.updateQnaContent(qnaContent) < 1) {
+				return ResponseEntity.ok(false);
+			}
+			
+			if (qnaContent.getTags() != null) {
+				// 기존 태그 삭제
+				
+				// 태그 추가
+				for (String tagName : qnaContent.getTags()) {
+					qnaContentService.insertTag(tagName, qnaContent.getId());
+				}
+			}
+			
+			return ResponseEntity.ok(true);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
+	@DeleteMapping("/api/qna/delete")
+	public ResponseEntity<Boolean> deleteQna(@RequestBody QnAContentDTO qnaContent, HttpSession session) {
+		UserDTO user = (UserDTO) session.getAttribute("user");
+		final long userIdFromClient = qnaContent.getUserId();
+		if (user != null && user.getId() == userIdFromClient) {
+			// 질문 삭제
+			if (qnaContentService.deleteQnaContentById(qnaContent.getId()) < 1) {
+				return ResponseEntity.ok(false);
+			}
+			
+			// 태그는 ON DELETE CASCADE로 설정해두어 자동 삭제됨
+			
+			return ResponseEntity.ok(true);
 		} else {
 			return ResponseEntity.notFound().build();
 		}

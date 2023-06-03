@@ -56,6 +56,14 @@ public class QnAContentService {
 		return contentsDao.insertQnaContent(qnaContentDto);
 	}
 	
+	public int updateQnaContent(QnAContentDTO qnaContentDto) {
+		return contentsDao.updateQnaContent(qnaContentDto);
+	}
+	
+	public int deleteQnaContentById(long contentId) {
+		return contentsDao.deleteQnaContentById(contentId);
+	}
+	
 	public long getLastContentIdByUser(long userId) {
 		return contentsDao.getLastContentIdByUser(userId);
 	}
