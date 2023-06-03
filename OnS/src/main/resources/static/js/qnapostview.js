@@ -33,7 +33,7 @@ $(document).ready(function() {
 				let requestUrl = null;
 				let method = null;
 
-				// 답변이 질문 작성자만 작성한 경우 확인
+				// 답변을 질문 작성자만 작성한 경우 확인
 				let isExistOnlyAuthorComments = true;
 				$('.comment-user-id').toArray().forEach(function(element) {
 					if (element.value != userId) {
@@ -43,7 +43,7 @@ $(document).ready(function() {
 				});
 
 				if ($('#comment-counter').text() > 0 && !isExistOnlyAuthorComments) {
-					// 다른 사람이 작성한 답변이 존재하는 경우
+					// 다른 사람이 작성한 답변이 존재하는 경우 삭제 표시
 					data = {
 						'id': id,
 						'userId': userId,
@@ -54,7 +54,7 @@ $(document).ready(function() {
 					requestUrl = '/api/qna/modify';
 					method = 'PUT';
 				} else {
-					// 답변이 존재하지 않는 경우
+					// 다른 사람이 작성한 답변이 존재하지 않는 경우 게시물 완전 제거
 					data = {
 						'id': id,
 						'userId': userId,
@@ -88,7 +88,7 @@ $(document).ready(function() {
 			contentType: 'application/json',
 			success: function(response) {
 				// 서버에 저장 완료 후 서버에서 응답을 받았을 때 실행할 코드
-				/*location.href = homeUrl;*/
+				location.href = homeUrl;
 			},
 			error: function(xhr, status, error) {
 				// 요청 실패 시 실행할 코드
