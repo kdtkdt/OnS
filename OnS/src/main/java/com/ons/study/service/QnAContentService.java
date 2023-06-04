@@ -78,4 +78,9 @@ public class QnAContentService {
 	public int deleteTagByContentId(long contentId) {
 		return tagDao.deleteTagByContentId(contentId);
 	}
+	
+	// 지난 일주일 간 추가된 게시물에 있는 태그 갯수 순으로 받아오기
+	public String[] getPopularTags(int limit) {
+		return tagDao.getPopularTags(limit);
+	}
 }

@@ -86,8 +86,9 @@
 								<div id="question-info-box">
 									<span id="username" class="fon-15 fon-bold">${dto.nickname}</span>
 									<div>
-										<span class="fon-12">조회수&nbsp;</span> <span id="view-counter"
-											class="fon-12">${dto.viewCount }</span> <span class="fon-12">&nbsp;답변수&nbsp;</span>
+										<span class="fon-12">조회수&nbsp;</span>
+										<span id="view-counter" class="fon-12">${dto.viewCount }</span>
+										<span class="fon-12">&nbsp;답변수&nbsp;</span>
 										<span id="answer-counter" class="fon-12">${dto.commentCount}</span>
 									</div>
 								</div>
@@ -110,10 +111,11 @@
 		</section>
 		<div id="right-menu">
 			<div id="popular-tag-box">
-				<h2 class="mb20">인기태그</h2>
+				<h2 class="mb20">주간 인기 태그</h2>
 				<div id="popular-tag-container" class="mb20">
-					<span class="tag fon-11">#Elasticsearch</span> <span
-						class="tag fon-11">#Java</span>
+					<c:forEach items="${popularTags}" var="tag">
+						<span class="tag fon-11">#&nbsp;${tag}</span>
+					</c:forEach>
 				</div>
 			</div>
 		</div>

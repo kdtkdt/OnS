@@ -18,6 +18,7 @@ import com.ons.study.dto.UserDTO;
 public class QnABoardController {
 	
 	private static final String HOME_ROUTE = "redirect:/qnaboard";
+	private static final int POPULAR_TAG_LIMIT_NUMBER = 10;
 	
 	@Autowired
 	QnAContentService qnaContentService;
@@ -30,6 +31,7 @@ public class QnABoardController {
 		addUserInfoToModel(model, session);
 		model.addAttribute("qnaLists", qnaContentService.getQnaContentByPage(page));
 		model.addAttribute("qnaContentsTotalCount", qnaContentService.getQnaContentTotalCount());
+		model.addAttribute("popularTags", qnaContentService.getPopularTags(POPULAR_TAG_LIMIT_NUMBER));
 		model.addAttribute("pageLimit", QnAContentService.PAGE_LIMIT);
 		return "QnABoard";
 	}
