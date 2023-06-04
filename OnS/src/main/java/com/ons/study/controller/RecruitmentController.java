@@ -44,16 +44,10 @@ public class RecruitmentController {
 	@RequestMapping("/recruit/recruitmentpostview")
 	public ModelAndView recruitmentpostview(@RequestParam(value="id", required=false, defaultValue="1") int id) {
 		RecruitmentDTO dto = service.recruitmentpostview(id);
-    	
-		System.out.println(dto.getId());
+		System.out.println(dto.getSkill().getStudy_group_id());
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("comments", qnaContentService.getCommentsById(id));
 		mv.addObject("postviewlist",dto);
-//		mv.addObject("commentlist",dto2);
-//		mv.addObject("commentinfo",dto3);
-//		mv.addObject("commentcount",commentcount);
-//		Date date = java.sql.Timestamp.valueOf(dto2.get(id).getComment().getCreatedTime());
-//		mv.addObject("date",date);
 		mv.setViewName("recruitment/postview");	
 		return mv;
 	}
@@ -65,8 +59,6 @@ public class RecruitmentController {
 	
 	@PostMapping("/recruit/boardwrite")
 	public String writeprocess(RecruitmentDTO dto) {
-		System.out.println(dto.getStudy().getStart_date());
-//		service.insertStudyGroup(dto);
 		service.insertContent(dto);
 		
 		
@@ -80,17 +72,7 @@ public class RecruitmentController {
 		}else {
 			System.out.println("수정입니다.");
 		}
-//		RecruitmentDTO dto = service.recruitmentpostview(id);
-//		List<RecruitmentDTO> dto2 = service.postviewcomment(id);
-//		List<CommentDTO> dto3 = service.commentuserinfo(id);
-//		int commentcount = service.commentcount(id);
 		ModelAndView mv = new ModelAndView();
-//		mv.addObject("postviewlist",dto);
-//		mv.addObject("commentlist",dto2);
-//		mv.addObject("commentinfo",dto3);
-//		mv.addObject("commentcount",commentcount);
-//		Date date = java.sql.Timestamp.valueOf(dto2.get(1).getComment().getCreatedTime());
-//		mv.addObject("date",date);	
 		return "redirect:/recruitmentlist";
 	}
 	
@@ -101,5 +83,12 @@ public class RecruitmentController {
 		mv.addObject("postviewlist",dto);
 		mv.setViewName("recruitment/postviewedit");	
 		return mv;
+	}
+	
+	@RequestMapping("/recruit/postviewdelete")
+	public String postviewdelete( int groupid , int contentid) {
+		service.deleteContent(contentid);
+		service.deleteSkill(groupid);
+		return "redirect:/recruitmentlist";
 	}
 }

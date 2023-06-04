@@ -45,8 +45,20 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 		// TODO Auto-generated method stub
 		dao.insertStudyGroup(dto.getStudy());
 		dao.insertSkill(dto);
-		
 		return dao.insertContent(dto);
+	}
+
+	@Override
+	public int deleteContent(int id) {
+		// TODO Auto-generated method stub
+		return dao.deleteContent(id);
+	}
+	
+	@Override
+	public int deleteSkill(int id) {
+		// TODO Auto-generated method stub
+		dao.deleteStudyGroup(id);
+		return dao.deleteSkill(id);
 	}
 	
 

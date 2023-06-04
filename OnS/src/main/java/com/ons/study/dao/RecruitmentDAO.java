@@ -23,6 +23,9 @@ public interface RecruitmentDAO {
 	public int insertContent(RecruitmentDTO dto);
 	public int insertBoard(RecruitmentDTO dto);
 	public int insertSkill(RecruitmentDTO dto);
+	public int deleteContent(int id);
+	public int deleteStudyGroup(int id);
+	public int deleteSkill(int id);
 	
 	
 }

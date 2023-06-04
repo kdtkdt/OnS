@@ -62,7 +62,7 @@ inner join user u on c.user_id = u.id where board_type =1
 
 <select id="recruitmentpostview" resultMap="recruitmentmap"  parameterType="int">
 select c.id as c_id, u.id as u_id, c.user_id, title, contents, created_time, updated_time, board_type, `like`,
- view_count, user_email, password, nickname
+ view_count, user_email, password, nickname, c.study_group_id
 from content c
 inner join user u on c.user_id = u.id where c.board_type =1 and c.id=#{id}
 </select>
@@ -79,5 +79,21 @@ insert into content(user_id ,title, contents, board_type, study_group_id) values
 <insert id="insertSkill" parameterType="com.ons.study.dto.RecruitmentDTO" >
 insert into skill(study_group_id,name) values(#{study.id},#{skill.name})
 </insert>
+
+<delete id="deleteContent" parameterType="int">
+	delete from content where id= #{id}
+</delete>
+
+<delete id="deleteStudyGroup" parameterType="int">
+	delete from study_group where id=#{id}
+</delete>
+
+<delete id="deleteSkill" parameterType="int">
+	delete from skill where study_group_id=#{study_group_id}
+</delete>
+
+<!-- <update id="updateBoard" parameterType="boarddto"> -->
+<!-- 	update board set title=#{title}, contents=#{contents}, writingtime=now() where id=#{id} -->
+<!-- </update> -->
 
 </mapper>

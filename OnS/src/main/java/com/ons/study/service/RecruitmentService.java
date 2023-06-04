@@ -11,6 +11,7 @@ public interface RecruitmentService {
 	public List<RecruitmentDTO> recruitmentList2();
 	public List<RecruitmentDTO> recruitmentList3();
 	public RecruitmentDTO recruitmentpostview(int id);
-//	public int insertStudyGroup(RecruitmentDTO dto);
 	public int insertContent(RecruitmentDTO dto);
+	public int deleteContent(int id);
+	public int deleteSkill(int id);
 }

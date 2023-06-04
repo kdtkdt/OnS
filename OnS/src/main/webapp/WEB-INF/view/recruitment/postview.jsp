@@ -46,7 +46,7 @@
             <div id="content-delimeter" class="mt10 mb10"></div>
             <!-- 수정/삭제는 게시글 작성자일 때만 보이게 수정 필요 -->
             <div id="button-box">
-                <button id="delete" class="button ml10 pt5 pb5 pl20 pr20 fon-13">삭제</button>
+                <button id="delete" class="button ml10 pt5 pb5 pl20 pr20 fon-13" onclick="document.location.href='/recruit/postviewdelete?groupid=${postviewlist.skill.study_group_id} &contentid=${ postviewlist.id}'">삭제</button>
                 <button id="modify" class="button ml10 pt5 pb5 pl20 pr20 fon-13" onclick="document.location.href='/recruit/postviewedit?id=${postviewlist.id }'">수정</button>
             </div>
         </div>
