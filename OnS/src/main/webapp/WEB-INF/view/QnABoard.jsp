@@ -35,7 +35,7 @@
 				<div class="btn-box">
 					<div id="search-box">
 						<input type="text" id="search-input" class="fon-15"
-							placeholder="궁금한 것을 검색하세요."></input>
+							placeholder="궁금한 키워드를 입력하고 검색버튼을 눌러주세요."></input>
 						<button id="search-btn"
 							class="button ml10 pt5 pb5 pl20 pr20 fon-13 mr10">검색</button>
 					</div>
@@ -104,7 +104,7 @@
 				long totalPage = totalCount / pageLimit;
 				totalPage += totalCount % pageLimit != 0 ? 1 : 0;
 				for (int i = 1; i <= totalPage; ++i) {
-					out.println("<a class='ml20 fon-13' href='/qnaboard?page=" + i + "'>" + i + "</a>");
+					out.println("<a class='paging ml20 fon-13' href='/qnaboard?page=" + i + "'>" + i + "</a>");
 				}
 				%>
 			</div>

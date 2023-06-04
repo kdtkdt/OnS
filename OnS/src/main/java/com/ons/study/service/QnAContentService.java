@@ -38,6 +38,14 @@ public class QnAContentService {
 		return dtoList;
 	}
 	
+	public List<QnAContentDTO> getQnaContentByKeyword(int page, String keyword) {
+		List<QnAContentDTO> dtoList = contentsDao.getQnaContentByKeyword((page-1) * PAGE_LIMIT, PAGE_LIMIT, keyword);
+		for (var dto : dtoList) {
+			dto.setTags(contentsDao.getTagsByContentId(dto.getId()));
+		}
+		return dtoList;
+	}
+	
 	public QnAContentDTO getQnaContentById(long contentId) {
 		QnAContentDTO dto = contentsDao.getQnaContentById(contentId);
 		dto.setTags(contentsDao.getTagsByContentId(dto.getId()));
@@ -50,6 +58,10 @@ public class QnAContentService {
 	
 	public long getQnaContentCountByTag(String tagName) {
 		return contentsDao.getQnaContentCountByTag(tagName);
+	}
+	
+	public long getQnaContentCountByKeyword(String keyword) {
+		return contentsDao.getQnaContentCountByKeyword(keyword);
 	}
 	
 	public String[] getTagsByContentId(long contentId) {

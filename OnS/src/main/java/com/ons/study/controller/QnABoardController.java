@@ -40,7 +40,8 @@ public class QnABoardController {
 			qnaContent = qnaContentService.getQnaContentByTag(page, popularTag);
 			qnaContentCount = qnaContentService.getQnaContentCountByTag(popularTag);
 		} else if (popularTag == null && query != null) {
-			
+			qnaContent = qnaContentService.getQnaContentByKeyword(page, query);
+			qnaContentCount = qnaContentService.getQnaContentCountByKeyword(query);
 		} else {
 			qnaContent = qnaContentService.getQnaContentByPage(page);
 			qnaContentCount = qnaContentService.getQnaContentTotalCount();
