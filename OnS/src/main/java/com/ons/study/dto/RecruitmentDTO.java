@@ -4,9 +4,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class RecruitmentDTO {
-	int id, user_id;
+	int id, user_id ;
 	String title, contents, created_time, updated_time;
-	int board_type, like, view_count;
+	int board_type, like, view_count, study_group_id;
+	
+
 	StudyDTO study;
 	SkillDTO skill;
 	UserDTO user;
@@ -89,6 +91,21 @@ public class RecruitmentDTO {
 	}
 	public void setStudy(StudyDTO study) {
 		this.study = study;
+	}
+	
+	
+	public int getStudy_group_id() {
+		return study_group_id;
+	}
+	public void setStudy_group_id(int study_group_id) {
+		this.study_group_id = study_group_id;
+	}
+	@Override
+	public String toString() {
+		return "RecruitmentDTO [id=" + id + ", user_id=" + user_id + ", title=" + title + ", contents=" + contents
+				+ ", created_time=" + created_time + ", updated_time=" + updated_time + ", board_type=" + board_type
+				+ ", like=" + like + ", view_count=" + view_count + ", study_group_id=" + study_group_id + ", study="
+				+ study + ", skill=" + skill + ", user=" + user + ", comment=" + comment + "]";
 	}
 	
 }

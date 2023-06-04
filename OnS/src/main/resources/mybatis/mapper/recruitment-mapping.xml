@@ -16,7 +16,6 @@
 	<collection property="study" resultMap="studyMap"></collection>
 	<collection property="skill" resultMap="skillMap"></collection>
 	<collection property="user" resultMap="userMap"></collection>
-	<collection property="comment" resultMap="commentMap"></collection>
 <!-- 	<collection property="member" resultMap="memberMap"></association> -->
 </resultMap>
 
@@ -28,9 +27,9 @@
 </resultMap>
 <select id="recruitmentList" resultMap="recruitmentmap">
 select c.id as c_id, s.id as s_id, user_id, title, contents, created_time, updated_time, board_type, `like`,
- view_count, study_group_id, name
+ view_count, s.study_group_id, name
 from content c
-inner join skill s on c.id = s.study_group_id where board_type =1
+inner join skill s on c.study_group_id = s.study_group_id where board_type =1
 </select>
 
 <resultMap type="com.ons.study.dto.StudyDTO" id="studyMap">
@@ -45,7 +44,7 @@ inner join skill s on c.id = s.study_group_id where board_type =1
 select c.id as c_id, s.id as s_id, user_id, title, contents, created_time, updated_time, board_type, `like`,
  view_count, name, recruit_period, start_date, end_date, total_member
 from content c
-inner join study_group s on c.id = s.id where board_type =1
+inner join study_group s on c.study_group_id = s.id where board_type =1
 </select>
 
 <resultMap type="com.ons.study.dto.UserDTO" id="userMap">
@@ -68,26 +67,17 @@ from content c
 inner join user u on c.user_id = u.id where c.board_type =1 and c.id=#{id}
 </select>
 
-<select id="commentuserinfo" resultMap="commentMap"  parameterType="int">
-select c.*, u.*
-from comment c
-inner join user u on c.user_id = u.id where c.content_id=#{id}
-</select>
+<insert id="insertStudyGroup" parameterType="com.ons.study.dto.StudyDTO" useGeneratedKeys="true" keyProperty="id">
+<!-- insert into study_group(name ,recruit_period, start_date, end_date, total_member) values(#{study.name}, #{study.recruit_period}, #{study.start_date}, #{study.end_date}, #{study.total_member}) -->
+insert into study_group(name ,recruit_period, start_date, end_date, total_member) values(#{name}, #{recruit_period}, #{start_date}, #{end_date}, #{total_member})
+</insert>
 
-<resultMap type="com.ons.study.dto.CommentDTO" id="commentMap">
-	<id property="id" column="c_id"/>
-	<result property="contentId" column="content_id"/>
-	<result property="userId" column="c_user_id"/>
-	<result property="parentId" column="parent_id"/>
-	<result property="contents" column="c_contents"/>
-	<result property="createdTime" column="c_created_time"/>
-	<result property="updatedTime" column="c_updated_time"/>
-	<collection property="user" resultMap="userMap"></collection>
-</resultMap>
-<select id="postviewcomment" resultMap="recruitmentmap" parameterType="int">
-select c.id as c_id, content_id, c.user_id as c_user_id, parent_id, c.contents as c_contents, c.created_time as c_created_time, c.updated_time as c_updated_time
-from content t
-inner join comment c on t.id = content_id where board_type =1 and t.id=#{id}
-</select>
+<insert id="insertContent" parameterType="com.ons.study.dto.RecruitmentDTO" >
+insert into content(user_id ,title, contents, board_type, study_group_id) values(1, #{title}, #{contents}, 1, #{study.id})
+</insert>
+
+<insert id="insertSkill" parameterType="com.ons.study.dto.RecruitmentDTO" >
+insert into skill(study_group_id,name) values(#{study.id},#{skill.name})
+</insert>
 
 </mapper>

@@ -29,7 +29,7 @@ public void setRecruit_period(String recruit_period) {
 public String getStart_date() {
 	return start_date;
 }
-public void setStart_datd(String start_date) {
+public void setStart_date(String start_date) {
 	this.start_date = start_date;
 }
 public String getEnd_date() {
