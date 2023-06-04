@@ -13,7 +13,6 @@ import jakarta.servlet.http.HttpSession;
 
 import com.ons.study.dto.QnAContentDTO;
 import com.ons.study.dto.UserDTO;
-import com.ons.study.dto.CommentDTO;
 
 @Controller
 public class QnABoardController {
