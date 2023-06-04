@@ -114,7 +114,7 @@
 				<h2 class="mb20">주간 인기 태그</h2>
 				<div id="popular-tag-container" class="mb20">
 					<c:forEach items="${popularTags}" var="tag">
-						<span class="tag fon-11">#&nbsp;${tag}</span>
+						<span class="popular-tag tag fon-11">#&nbsp;${tag}</span>
 					</c:forEach>
 				</div>
 			</div>

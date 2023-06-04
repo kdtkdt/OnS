@@ -18,5 +18,10 @@ $(document).ready(function() {
 		} else {
 			// 검색 결과로 갱신
 		}
-	})
+	});
+	
+	$('#popular-tag-container .popular-tag').click(function() {
+		location.href = `/qnaboard?tag=${$(this).text().substring(2)}`
+	});
+	
 });

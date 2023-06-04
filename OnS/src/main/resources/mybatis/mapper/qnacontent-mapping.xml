@@ -29,6 +29,15 @@
     LIMIT #{startRow}, #{pageSize}
 </select>
 
+<select id="getQnaContentByTag" resultMap="QnaContentDtoResultMap">
+	SELECT *, (SELECT COUNT(*) FROM comment WHERE content_id = c.id) AS comment_count
+    FROM content AS c
+    LEFT JOIN user AS u ON c.user_id = u.id
+    WHERE board_type = 2 AND c.id IN (SELECT content_id FROM tag WHERE name = #{tagName})
+    ORDER BY created_time DESC
+    LIMIT #{startRow}, #{pageSize}
+</select>
+
 <select id="getQnaContentById" resultMap="QnaContentDtoResultMap">
     SELECT *, (SELECT COUNT(*) FROM comment WHERE content_id = c.id) AS comment_count
     FROM content AS c
@@ -38,6 +47,11 @@
 
 <select id="getQnaContentTotalCount" resultType="long">
 	SELECT COUNT(*) FROM content WHERE board_type = 2;
+</select>
+
+<select id="getQnaContentCountByTag" resultType="long">
+	SELECT COUNT(*) FROM content
+	WHERE board_type = 2 AND id IN (SELECT content_id FROM tag WHERE name = #{tagName});
 </select>
 
 <select id="getTagsByContentId" resultType="String">

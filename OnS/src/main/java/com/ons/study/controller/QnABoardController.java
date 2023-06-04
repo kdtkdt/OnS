@@ -1,6 +1,8 @@
 package com.ons.study.controller;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,10 +29,24 @@ public class QnABoardController {
 	@GetMapping("/qnaboard")
 	public String qnaBoard(Model model, 
 			@RequestParam(value="page", required=false, defaultValue="1") int page,
+			@RequestParam(value="tag", required=false) String popularTag,
+			@RequestParam(value="query", required=false) String query,
 			HttpSession session) {
 		addUserInfoToModel(model, session);
-		model.addAttribute("qnaLists", qnaContentService.getQnaContentByPage(page));
-		model.addAttribute("qnaContentsTotalCount", qnaContentService.getQnaContentTotalCount());
+		
+		List<QnAContentDTO> qnaContent = null;
+		long qnaContentCount = 0;
+		if (popularTag != null && query == null) {
+			qnaContent = qnaContentService.getQnaContentByTag(page, popularTag);
+			qnaContentCount = qnaContentService.getQnaContentCountByTag(popularTag);
+		} else if (popularTag == null && query != null) {
+			
+		} else {
+			qnaContent = qnaContentService.getQnaContentByPage(page);
+			qnaContentCount = qnaContentService.getQnaContentTotalCount();
+		}
+		model.addAttribute("qnaLists", qnaContent);
+		model.addAttribute("qnaContentsTotalCount", qnaContentCount);
 		model.addAttribute("popularTags", qnaContentService.getPopularTags(POPULAR_TAG_LIMIT_NUMBER));
 		model.addAttribute("pageLimit", QnAContentService.PAGE_LIMIT);
 		return "QnABoard";

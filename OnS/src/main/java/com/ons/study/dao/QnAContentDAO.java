@@ -13,8 +13,10 @@ import com.ons.study.dto.QnAContentDTO;
 public interface QnAContentDAO {
 	
 	public List<QnAContentDTO> getQnaContentByPage(int startRow, int pageSize);
+	public List<QnAContentDTO> getQnaContentByTag(int startRow, int pageSize, String tagName);
 	public String[] getTagsByContentId(long contentId);
 	public long getQnaContentTotalCount();
+	public long getQnaContentCountByTag(String tagName);
 	public QnAContentDTO getQnaContentById(long contentId);
 	public int insertQnaContent(QnAContentDTO qnaContentDto);
 	public int updateQnaContent(QnAContentDTO qnaContentDto);
