@@ -16,5 +16,9 @@ public interface QnAContentDAO {
 	public String[] getTagsByContentId(long contentId);
 	public long getQnaContentTotalCount();
 	public QnAContentDTO getQnaContentById(long contentId);
+	public int insertQnaContent(QnAContentDTO qnaContentDto);
+	public int updateQnaContent(QnAContentDTO qnaContentDto);
+	public int deleteQnaContentById(long contentId);
+	public long getLastContentIdByUser(long userId);
 	
 }

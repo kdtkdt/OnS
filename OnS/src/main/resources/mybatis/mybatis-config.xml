@@ -10,6 +10,7 @@
 	<typeAlias type="com.ons.study.dto.RecruitmentDTO" alias="recruitmentdto"/>
 	<typeAlias type="com.ons.study.dto.CommentDTO" alias="commentdto"/>
 	<typeAlias type="com.ons.study.dto.UserDTO" alias="userdto"/>
+	<typeAlias type="com.ons.study.dto.TagDTO" alias="tagdto"/>
 </typeAliases>
 
 </configuration>

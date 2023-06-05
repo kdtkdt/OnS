@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ons.study.dao.RecruitmentDAO;
-import com.ons.study.dto.CommentDTO;
 import com.ons.study.dto.RecruitmentDTO;
 
 @Service
 public class RecruitmentServiceImpl implements RecruitmentService {
+
 	@Autowired
 	RecruitmentDAO dao;
 
@@ -39,17 +39,28 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 		return dao.recruitmentpostview(id);
 	}
 
+
 	@Override
-	public List<RecruitmentDTO> postviewcomment(int id) {
+	public int insertContent(RecruitmentDTO dto) {
 		// TODO Auto-generated method stub
-		return dao.postviewcomment(id);
+		dao.insertStudyGroup(dto.getStudy());
+		dao.insertSkill(dto);
+		return dao.insertContent(dto);
 	}
 
 	@Override
-	public List<CommentDTO> commentuserinfo(int id) {
+	public int deleteContent(int id) {
 		// TODO Auto-generated method stub
-		return dao.commentuserinfo(id);
+		return dao.deleteContent(id);
 	}
+	
+	@Override
+	public int deleteSkill(int id) {
+		// TODO Auto-generated method stub
+		dao.deleteStudyGroup(id);
+		return dao.deleteSkill(id);
+	}
+	
 
 	
 
