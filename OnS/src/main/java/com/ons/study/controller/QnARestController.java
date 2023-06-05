@@ -66,21 +66,32 @@ public class QnARestController {
 	}
 	
 	@DeleteMapping("/api/qna/delete")
-	public ResponseEntity<Boolean> deleteQna(@RequestBody QnAContentDTO qnaContent, HttpSession session) {
+	public ResponseEntity<QnAContentDTO> deleteQna(@RequestBody QnAContentDTO qnaContent, HttpSession session) {
 		UserDTO user = (UserDTO) session.getAttribute("user");
 		final long userIdFromClient = qnaContent.getUserId();
+		final long contentId = qnaContent.getId();
 		if (user != null && user.getId() == userIdFromClient) {
+			qnaContent = new QnAContentDTO();
+			qnaContent.setId(contentId);
 			// 질문 삭제
-			if (qnaContentService.deleteQnaContentById(qnaContent.getId()) < 1) {
-				return ResponseEntity.ok(false);
+			if (qnaContentService.deleteQnaContentById(contentId) < 1) {
+				return ResponseEntity.ok(qnaContent);
 			}
 			
 			// 태그는 ON DELETE CASCADE로 설정해두어 자동 삭제됨
 			
-			return ResponseEntity.ok(true);
+			return ResponseEntity.ok(qnaContent);
 		} else {
 			return ResponseEntity.notFound().build();
 		}
+	}
+	
+	// 조회수 증가
+	@PutMapping("/api/qna/read")
+	public ResponseEntity<Boolean> updateViewCount(@RequestBody QnAContentDTO qnaContent, HttpSession session) {
+		qnaContentService.updateQnaContentViewCount(qnaContent.getId());
+		
+		return ResponseEntity.ok(true);
 	}
 	
 }

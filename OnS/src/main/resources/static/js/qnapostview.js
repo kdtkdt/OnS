@@ -18,6 +18,7 @@ $(document).ready(function() {
 			}
 		);
 
+		// 목록 버튼 누르면 질문 목록으로 다시 이동
 		$('#list-button').click(function() {
 			window.location.href = homeUrl;
 		});
@@ -74,6 +75,18 @@ $(document).ready(function() {
 
 		});
 
+		// 조회수 증가
+		console.log(localStorage.getItem(`${id}`));
+		if (localStorage.getItem(`${id}`) == null) {
+			localStorage.setItem(`${id}`, `${id}`);
+			url = '/api/qna/read';
+			method = 'put';
+			data = {
+				'id': id,
+			}
+			request(url, method, data);
+		}
+
 	} else if (location.href.includes('/review')) {
 		// 수강후기 게시판 처리용
 		homeUrl = '/reviewboard';
@@ -88,7 +101,11 @@ $(document).ready(function() {
 			contentType: 'application/json',
 			success: function(response) {
 				// 서버에 저장 완료 후 서버에서 응답을 받았을 때 실행할 코드
-				location.href = homeUrl;
+				
+				// 삭제한 경우 이동
+				if(response.id !== undefined) {
+					location.href = homeUrl;
+				}
 			},
 			error: function(xhr, status, error) {
 				// 요청 실패 시 실행할 코드
