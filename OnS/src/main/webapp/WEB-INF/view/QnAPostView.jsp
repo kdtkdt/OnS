@@ -53,7 +53,7 @@
 			<!-- 수정/삭제는 게시글 작성자일 때만 보이게 수정 필요 -->
 			<div id="button-box">
 				<button id="list-button" class="ml10 pt5 pb5 pl20 pr20 fon-13">목록</button>
-				<c:if test="${qnaContent.getUserId() == user.getId()}"> <!--  && !qnaContent.isDeleted()  -->
+				<c:if test="${qnaContent.getUserId() == user.getId() && !qnaContent.isDeleted()}">
 					<button id="delete-button" class="ml10 pt5 pb5 pl20 pr20 fon-13">삭제</button>
 					<button id="modify-button" class="ml10 pt5 pb5 pl20 pr20 fon-13">수정</button>
 				</c:if>
