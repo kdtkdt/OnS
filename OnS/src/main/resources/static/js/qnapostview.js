@@ -102,9 +102,11 @@ $(document).ready(function() {
 			success: function(response) {
 				// 서버에 저장 완료 후 서버에서 응답을 받았을 때 실행할 코드
 				
-				// 삭제한 경우 이동
 				if(response.id !== undefined) {
+					// 삭제한 경우 이동
 					location.href = homeUrl;
+				} else if (response) {
+					$('#view-count').text(Number($('#view-count').text()) + 1);
 				}
 			},
 			error: function(xhr, status, error) {
