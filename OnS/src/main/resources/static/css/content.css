@@ -651,3 +651,27 @@ input::placeholder {
     float: left;
     margin-left:5px !important;
 }
+.searchword{ 
+	border-right: none;
+	border-left: none;
+	border-top: none;
+	border-bottom: #999 1px solid;
+}
+.writetitle{
+	border-right: none;
+	border-left: none;
+	border-top: none;
+	border-bottom: #999 1px solid;
+}
+.userid{border-right: none;
+	border-left: none;
+	border-top: none;
+	border-bottom: #999 1px solid;	
+}
+.num{
+	border-right: none;
+	border-left: none;
+	border-top: none;
+	border-bottom: #999 1px solid;
+
+}

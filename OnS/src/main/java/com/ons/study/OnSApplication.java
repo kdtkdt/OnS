@@ -8,6 +8,7 @@ public class OnSApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(OnSApplication.class, args);
+		
 	}
 
 }
