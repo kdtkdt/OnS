@@ -79,7 +79,7 @@ $(document).ready(function() {
 		if (localStorage.getItem(`${id}`) == null) {
 			localStorage.setItem(`${id}`, `${id}`);
 			url = '/api/qna/read';
-			method = 'put';
+			method = 'PUT';
 			data = {
 				'id': id,
 			}
@@ -87,7 +87,17 @@ $(document).ready(function() {
 		}
 		
 		// 질문 해결 표시
-		
+		$('#solve-button').click(function() {
+			data = {
+				'id': id,
+			}
+			
+			// 해결 여부를 반전된 값으로 갱신 요청 
+			url = '/api/qna/solve';
+			method = 'PUT';
+			request(url, method, data);
+			
+		});
 
 	} else if (location.href.includes('/review')) {
 		// 수강후기 게시판 처리용
@@ -103,11 +113,10 @@ $(document).ready(function() {
 			contentType: 'application/json',
 			success: function(response) {
 				// 서버에 저장 완료 후 서버에서 응답을 받았을 때 실행할 코드
-				
-				if(response.id !== undefined) {
+				if(response.id !== 0) {
 					// 삭제한 경우 이동
 					location.href = homeUrl;
-				} else if (response) {
+				} else if (response.viewCount !== 0) {
 					$('#view-count').text(Number($('#view-count').text()) + 1);
 				}
 			},

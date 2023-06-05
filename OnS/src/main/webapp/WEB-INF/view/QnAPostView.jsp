@@ -50,7 +50,17 @@
 				</c:forEach>
 			</div>
 			<div id="content-delimeter" class="mt10 mb10"></div>
-			<!-- 수정/삭제는 게시글 작성자일 때만 보이게 수정 필요 -->
+			<!-- Rounded switch -->
+			<c:if test="${qnaContent.getUserId() == user.getId() && !qnaContent.isDeleted()}">
+			<div class="solve-button-box flex" style="align-items: center; justify-content: center;">
+				<label class="switch"> <input id="solve-button" type="checkbox" ${qnaContent.solved ? 'checked' : ''}>
+					<span class="slider round"></span>
+				</label>
+				<h2 class="ml10 wid-60px mt5">해결</h2>
+			</div>
+			
+			</c:if>
+			<!-- 수정/삭제는 게시글 작성자일 때만 보임 -->
 			<div id="button-box">
 				<button id="list-button" class="ml10 pt5 pb5 pl20 pr20 fon-13">목록</button>
 				<c:if test="${qnaContent.getUserId() == user.getId() && !qnaContent.isDeleted()}">

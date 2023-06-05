@@ -108,7 +108,11 @@ public class QnAContentService {
 		return tagDao.getPopularTags(limit);
 	}
 
-	public long updateQnaContentViewCount(long contentId) {
+	public int updateQnaContentViewCount(long contentId) {
 		return contentsDao.updateQnaContentViewCount(contentId);
+	}
+	
+	public int updateQnaContentSolved(long contentId) {
+		return contentsDao.updateQnaContentSolved(contentId);
 	}
 }
