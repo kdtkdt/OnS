@@ -25,12 +25,12 @@
 			  <option value="melon">리액트</option>
 			</select>
 		 	<button class="button ml10 pt5 pb5 pl20 pr20 fon-13">검색</button>
-		 	<button id="newPage" class="button ml10 pt5 pb5 pl20 pr20 fon-13  mr10">새글작성</button>
+		 	<button id="newPage" class="button ml10 pt5 pb5 pl20 pr20 fon-13  mr10" onclick="document.location.href='/recruit/boardwrite'">새글작성</button>
 		</div>
 	  </div>
       <div class="container">
         <c:forEach items="${boardlist }" var="dto" varStatus="status">
-	        <div class="blog-list" class="link-box" onclick="document.location.href='recruitmentpostview?id=${boardlist2[status.index].id }'">
+	        <div class="blog-list" class="link-box" onclick="document.location.href='/recruit/recruitmentpostview?id=${boardlist2[status.index].id }'">
 	          <div class="blog-item">
 		          	<div class="badge fon-11 mb10 plus">${dto.skill.name }</div>
 		            <div class="blog-content plus">

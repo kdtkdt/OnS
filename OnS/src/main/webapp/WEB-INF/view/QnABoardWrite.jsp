@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -32,15 +33,21 @@
 	
 	<br />
 	<div id="wrap">
+		<input type="hidden" class="user-id" value="${user.getId()}" />
+		<input type="hidden" class="content-origin" value="${qnaContent.getContents()}"/>
 		<div class="board-box pppp20">
 			<div id="titlearea" class="mb15">
 				<input type="text" id="title" class="fon-20 pb5"
-					placeholder="질문을 입력해주세요."></input>
+					placeholder="질문을 입력해주세요." value="${qnaContent.getTitle()}"/>
 			</div>
 			<div id="textarea">
 				<div id="editor"></div>
 				<br>
-				<div id="tag-box"></div>
+				<div id="tag-box">
+				<c:forEach items="${tags }" var="tag">
+					<span class="tag fon-11">#&nbsp;${tag}&nbsp;x</span>
+				</c:forEach>
+				</div>
 				<div id="tag-editor"></div>
 				<div class="btn-box mt20">
 					<button id="save" class="button ml10 pt5 pb5 pl20 pr20 fon-13">저장</button>

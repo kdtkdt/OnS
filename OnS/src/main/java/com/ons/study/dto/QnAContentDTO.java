@@ -18,7 +18,15 @@ public class QnAContentDTO {
 	private boolean solved;
 	private String[] paths;
 	private String[] tags;
+	private boolean isDeleted;
 	
+	
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
 	public long getId() {
 		return id;
 	}

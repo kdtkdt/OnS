@@ -19,5 +19,9 @@ public class UserService {
 	public UserDTO getUserByEmailAndPassword(String email, String password) {
 		return userDao.getUserByEmailAndPassword(email, password);
 	}
+	
+	public int insertUser(UserDTO user) {
+		return userDao.insertUser(user);
+	}
 
 }

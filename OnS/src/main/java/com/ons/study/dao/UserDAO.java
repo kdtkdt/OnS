@@ -10,4 +10,5 @@ import com.ons.study.dto.UserDTO;
 public interface UserDAO {
 	public int isMember(String email, String password);
 	public UserDTO getUserByEmailAndPassword(String email, String password);
+	public int insertUser(UserDTO user);
 }

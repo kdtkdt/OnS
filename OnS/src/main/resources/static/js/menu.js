@@ -14,12 +14,8 @@ $(document).ready(function() {
 		} else {
 			requestGet('/request-logout');
 			alert(`로그아웃 되었습니다.`);
-			$('#username').text('');
-			$('#welcome').text('');
-			$('#login-logout-button').text('로그인');
-			if (location.href.includes('/profile')) {
-				location.href = homeRoute;
-			}
+			// 회원만 사용할 수 있는 기능도 로그아웃 후에 남아있게 되므로, 갱신처리함
+			location.reload();
 		}
 	})
 
