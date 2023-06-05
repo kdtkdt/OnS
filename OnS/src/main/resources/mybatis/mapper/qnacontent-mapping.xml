@@ -97,4 +97,12 @@
 	WHERE id = #{id}
 </delete>
 
+<update id="updateQnaContentViewCount" parameterType="long">
+	UPDATE content SET view_count = view_count + 1 WHERE id = #{contentId}
+</update>
+
+<update id="updateQnaContentSolved" parameterType="long">
+	UPDATE content SET solved = NOT solved WHERE id = #{contentId}
+</update>
+
 </mapper>

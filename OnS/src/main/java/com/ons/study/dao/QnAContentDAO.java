@@ -24,5 +24,7 @@ public interface QnAContentDAO {
 	public int updateQnaContent(QnAContentDTO qnaContentDto);
 	public int deleteQnaContentById(long contentId);
 	public long getLastContentIdByUser(long userId);
+	public int updateQnaContentViewCount(long contentId);
+	public int updateQnaContentSolved(long contentId);
 	
 }

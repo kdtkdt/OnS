@@ -27,11 +27,6 @@
 		<div id="left-menu"></div>
 		<section class="qna-post-section">
 			<div class="selectBox mb20">
-				<!-- Rounded switch -->
-				<label class="switch"> <input type="checkbox"> <span
-					class="slider round"></span>
-				</label>
-				<h3 class="ml10 wid-60px">해결됨</h3>
 				<div class="btn-box">
 					<div id="search-box">
 						<input type="text" id="search-input" class="fon-15"
