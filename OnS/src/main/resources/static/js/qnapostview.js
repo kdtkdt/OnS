@@ -76,7 +76,6 @@ $(document).ready(function() {
 		});
 
 		// 조회수 증가
-		console.log(localStorage.getItem(`${id}`));
 		if (localStorage.getItem(`${id}`) == null) {
 			localStorage.setItem(`${id}`, `${id}`);
 			url = '/api/qna/read';
@@ -86,6 +85,9 @@ $(document).ready(function() {
 			}
 			request(url, method, data);
 		}
+		
+		// 질문 해결 표시
+		
 
 	} else if (location.href.includes('/review')) {
 		// 수강후기 게시판 처리용
