@@ -8,7 +8,9 @@
 			<c:if test="${not empty user}">
 				<a id="username" class="fon-15 mt20 mr10 fon-bold" href="/profile">${user.getNickname()}</a>
 				<p id="welcome" class="fon-15 mt20 mr20">님 환영합니다!</p>
-				<button id="login-logout-button" class="fon-15 mt20">로그아웃</button>
+				<a id="study-room" class="fon-15 mt20 mr10 fon-bold" href="/studyroom">스터디룸</a>
+				<span>|</span>
+				<button id="login-logout-button" class="fon-15 ml10 mt20">로그아웃</button>
 			</c:if>
 			<c:if test="${empty user}">
 				<button id="login-logout-button" class="fon-15 mt20">로그인</button>
