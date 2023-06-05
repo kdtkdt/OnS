@@ -30,6 +30,22 @@ public class QnAContentService {
 		return dtoList;
 	}
 	
+	public List<QnAContentDTO> getQnaContentByTag(int page, String tagName) {
+		List<QnAContentDTO> dtoList = contentsDao.getQnaContentByTag((page-1) * PAGE_LIMIT, PAGE_LIMIT, tagName);
+		for (var dto : dtoList) {
+			dto.setTags(contentsDao.getTagsByContentId(dto.getId()));
+		}
+		return dtoList;
+	}
+	
+	public List<QnAContentDTO> getQnaContentByKeyword(int page, String keyword) {
+		List<QnAContentDTO> dtoList = contentsDao.getQnaContentByKeyword((page-1) * PAGE_LIMIT, PAGE_LIMIT, keyword);
+		for (var dto : dtoList) {
+			dto.setTags(contentsDao.getTagsByContentId(dto.getId()));
+		}
+		return dtoList;
+	}
+	
 	public QnAContentDTO getQnaContentById(long contentId) {
 		QnAContentDTO dto = contentsDao.getQnaContentById(contentId);
 		dto.setTags(contentsDao.getTagsByContentId(dto.getId()));
@@ -38,6 +54,14 @@ public class QnAContentService {
 	
 	public long getQnaContentTotalCount() {
 		return contentsDao.getQnaContentTotalCount();
+	}
+	
+	public long getQnaContentCountByTag(String tagName) {
+		return contentsDao.getQnaContentCountByTag(tagName);
+	}
+	
+	public long getQnaContentCountByKeyword(String keyword) {
+		return contentsDao.getQnaContentCountByKeyword(keyword);
 	}
 	
 	public String[] getTagsByContentId(long contentId) {
@@ -77,5 +101,10 @@ public class QnAContentService {
 	
 	public int deleteTagByContentId(long contentId) {
 		return tagDao.deleteTagByContentId(contentId);
+	}
+	
+	// 지난 일주일 간 추가된 게시물에 있는 태그 갯수 순으로 받아오기
+	public String[] getPopularTags(int limit) {
+		return tagDao.getPopularTags(limit);
 	}
 }
