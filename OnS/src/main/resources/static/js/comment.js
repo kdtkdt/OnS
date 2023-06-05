@@ -74,7 +74,10 @@ $(document).ready(function() {
 					<button class="comment-cancel-reply-button mt20 mb10 ml10 pt5 pb5 pl20 pr20 fon-13">취소</button>
 					<button	class="comment-save-reply-button mt20 mb10 ml10 pt5 pb5 pl20 pr20 fon-13">답글 등록</button>
 				</div>
-			`);			
+			`);
+			$('html, body').animate({
+			  	scrollTop: $('.comment-reply-input').offset().top
+			}, 800);
 		}
 		
 		// 답글 등록 버튼 눌렀을 때, 내용이 있는 경우 등록
@@ -119,13 +122,16 @@ $(document).ready(function() {
 		
 		// 입력창이 여러개 중복되지 않기 위해 존재 여부 검사 후 수정 입력창 추가
 		if($(this).parent().parent().parent().find('.comment-modify-input').val() == undefined) {
-			$(this).parent().parent().parent().append(`
+			$(this).parent().parent().siblings('#content-delimeter').first().after(`
 				<textarea class="comment-modify-input pppp20" style="width:100%">${commentHtml.replace(/<br\s*\/?>/gi, '\n')}</textarea>
 				<div id="button-box">
 					<button class="comment-modify-cancel-button mt20 mb10 ml10 pt5 pb5 pl20 pr20 fon-13">취소</button>
 					<button	class="comment-save-modify-button mt20 mb10 ml10 pt5 pb5 pl20 pr20 fon-13">수정완료</button>
 				</div>
-			`);			
+			`);
+			$('html, body').animate({
+			  	scrollTop: $('.comment-modify-input').offset().top,
+			}, 800);
 		}
 		
 		// 수정 완료 버튼 눌렀을 때, 기존과 다른 경우 서버에 반영

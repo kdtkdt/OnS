@@ -27,15 +27,10 @@
 		<div id="left-menu"></div>
 		<section class="qna-post-section">
 			<div class="selectBox mb20">
-				<!-- Rounded switch -->
-				<label class="switch"> <input type="checkbox"> <span
-					class="slider round"></span>
-				</label>
-				<h3 class="ml10 wid-60px">해결됨</h3>
 				<div class="btn-box">
 					<div id="search-box">
 						<input type="text" id="search-input" class="fon-15"
-							placeholder="궁금한 것을 검색하세요."></input>
+							placeholder="궁금한 키워드를 입력하고 검색버튼을 눌러주세요."></input>
 						<button id="search-btn"
 							class="button ml10 pt5 pb5 pl20 pr20 fon-13 mr10">검색</button>
 					</div>
@@ -86,8 +81,9 @@
 								<div id="question-info-box">
 									<span id="username" class="fon-15 fon-bold">${dto.nickname}</span>
 									<div>
-										<span class="fon-12">조회수&nbsp;</span> <span id="view-counter"
-											class="fon-12">${dto.viewCount }</span> <span class="fon-12">&nbsp;답변수&nbsp;</span>
+										<span class="fon-12">조회수&nbsp;</span>
+										<span id="view-counter" class="fon-12">${dto.viewCount }</span>
+										<span class="fon-12">&nbsp;답변수&nbsp;</span>
 										<span id="answer-counter" class="fon-12">${dto.commentCount}</span>
 									</div>
 								</div>
@@ -103,17 +99,18 @@
 				long totalPage = totalCount / pageLimit;
 				totalPage += totalCount % pageLimit != 0 ? 1 : 0;
 				for (int i = 1; i <= totalPage; ++i) {
-					out.println("<a class='ml20 fon-13' href='/qnaboard?page=" + i + "'>" + i + "</a>");
+					out.println("<a class='paging ml20 fon-13' href='/qnaboard?page=" + i + "'>" + i + "</a>");
 				}
 				%>
 			</div>
 		</section>
 		<div id="right-menu">
 			<div id="popular-tag-box">
-				<h2 class="mb20">인기태그</h2>
+				<h2 class="mb20">주간 인기 태그</h2>
 				<div id="popular-tag-container" class="mb20">
-					<span class="tag fon-11">#Elasticsearch</span> <span
-						class="tag fon-11">#Java</span>
+					<c:forEach items="${popularTags}" var="tag">
+						<span class="popular-tag tag fon-11">#&nbsp;${tag}</span>
+					</c:forEach>
 				</div>
 			</div>
 		</div>

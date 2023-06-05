@@ -13,4 +13,5 @@ public interface TagDAO {
 	public List<TagDTO> getTagsByContentId(long contentId);
 	public int insertTag(TagDTO tagdto);
 	public int deleteTagByContentId(long contentId);
+	public String[] getPopularTags(int limit);
 }
