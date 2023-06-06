@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   	
-	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,19 +29,36 @@
 	<!-- 파일첨부 <input type="file" id="file"></input><br>-->
 	<jsp:include page="../header.jsp" />
 	<br />
-	<form action="recruit/recruitmentwriteresult">
-		<input type="hidden" name="id" value="${postviewlist.id }">
+	
+	<form action="/recruit/postviewedit" method="post" onsubmit="getText();">
+		<input type="hidden" name="study_group_id" value="${postviewlist3.study.id}">
+		<input type="hidden" name="id" value="${postviewlist.id}">
 		<div id="wrap">
 			<div class="board-box pppp20">
 				<div id="titlearea" class="mb15">
-					<input type="text" id="title" class="fon-20 pb5"
+					<input type="text" id="title" class="fon-20 pb5" name="title"
 						placeholder="제목을 작성해주세요" value="${postviewlist.title }"></input>
 				</div>
 				<div id="textarea">
+					<input type="text" id="title" class="fon-16 pb5 wid-100p mb20"
+						placeholder="스터디 그룹명을 작성해주세요" name="study.name" value="${postviewlist3.study.name }"></input>
+					<input type="text" id="title" class="fon-16 pb5 wid-100p mb20"
+						placeholder="사용 언어를 작성해주세요" name="skill.name" value="${postviewlist2.skill.name }"></input>
+					<input type="number" id="title" class="fon-16 pb5 wid-100p mb20"
+					 name="study.total_member" placeholder="모집인원을 작성해주세요" value="${postviewlist3.study.total_member }"></input>
+					<div class="datebox mb20">
+						<label for="date" class="fon-16 mr10" >마감 기한 :</label> 
+						<input type="date" data-placeholder="날짜 선택" class="mr15 postviewDate" value="${postviewlist3.study.recruit_period }"  name="study.recruit_period">
+						<label for="date" class="fon-16 mr10" >시작일 :</label> 
+						<input type="date" data-placeholder="날짜 선택" class="mr15 postviewDate" value="${postviewlist3.study.start_date }"  name="study.start_date">
+						<label for="date" class="fon-16 mr10" >종료일 :</label> 
+						<input type="date" data-placeholder="날짜 선택" class="mr15 postviewDate" value="${postviewlist3.study.end_date }" name="study.end_date">
+					</div>
 	<!-- 			에디터 사용시 추가 textarea대신 쓰세요! -->
 					<div id="editor">
 					${postviewlist.contents }
 					</div>
+					<input type="hidden" id="contents" name="contents" value="1">
 	<!-- 			에디터 사용시 추가 textarea대신 쓰세요! -->
 					<br>
 					<div class="btn-box mt20">
@@ -50,11 +66,17 @@
 						<button id="cancel" class="button ml10 pt5 pb5 pl20 pr20 fon-13" onclick="document.location.href='recruit/recruitmentwriteresult'">취소</button>
 					</div>
 				</div>
+				
 			</div>
 		</div>
 	</form>
 </body>
 <script type="text/javascript">
+function getText()
+{
+    document.getElementById("contents").value = document.getElementsByClassName("ql-editor")[0].innerHTML;
+    return true;
+}
 	// $(window).on('load',function(){
 	//     $('.menu').removeClass("choose");
 	//     $('.menu').eq(0).addClass("choose");

@@ -13,6 +13,7 @@
 	<result property="board_type" column="board_type"/>
 	<result property="like" column="like"/>
 	<result property="view_count" column="view_count"/>
+	<result property="study_group_id" column="study_group_id"/>
 	<collection property="study" resultMap="studyMap"></collection>
 	<collection property="skill" resultMap="skillMap"></collection>
 	<collection property="user" resultMap="userMap"></collection>
@@ -23,28 +24,28 @@
 <resultMap type="com.ons.study.dto.SkillDTO" id="skillMap">
 	<id property="study_group_id" column="study_group_id"/>
 	<result property="id" column="s_id"/>
-	<result property="name" column="name"/>
+	<result property="name" column="s_name"/>
 </resultMap>
 <select id="recruitmentList" resultMap="recruitmentmap">
 select c.id as c_id, s.id as s_id, user_id, title, contents, created_time, updated_time, board_type, `like`,
- view_count, s.study_group_id, name
+ view_count, s.study_group_id, s.name as s_name
 from content c
-inner join skill s on c.study_group_id = s.study_group_id where board_type =1
+inner join skill s on c.study_group_id = s.study_group_id where board_type =1 order by created_time desc 
 </select>
 
 <resultMap type="com.ons.study.dto.StudyDTO" id="studyMap">
 	<id property="id" column="s_id"/>
-	<result property="name" column="name"/>
+	<result property="name" column="g_name"/>
 	<result property="recruit_period" column="recruit_period"/>
 	<result property="start_date" column="start_date"/>
 	<result property="end_date" column="end_date"/>
 	<result property="total_member" column="total_member"/>
 </resultMap>
 <select id="recruitmentList2" resultMap="recruitmentmap">
-select c.id as c_id, s.id as s_id, user_id, title, contents, created_time, updated_time, board_type, `like`,
- view_count, name, recruit_period, start_date, end_date, total_member
+select c.id as c_id, g.id as g_id, user_id, title, contents, created_time, updated_time, board_type, `like`,
+ view_count, g.name as g_name, recruit_period, start_date, end_date, total_member
 from content c
-inner join study_group s on c.study_group_id = s.id where board_type =1
+inner join study_group g on c.study_group_id = g.id where board_type =1 order by created_time desc
 </select>
 
 <resultMap type="com.ons.study.dto.UserDTO" id="userMap">
@@ -67,13 +68,27 @@ from content c
 inner join user u on c.user_id = u.id where c.board_type =1 and c.id=#{id}
 </select>
 
+<select id="recruitmentpostview2" resultMap="recruitmentmap"  parameterType="int">
+select c.id as c_id, s.id as s_id, user_id, title, contents, created_time, updated_time, board_type, `like`,
+ view_count, s.study_group_id, s.name as s_name
+from content c
+inner join skill s on c.study_group_id = s.study_group_id where c.board_type =1 and c.id=#{id}
+</select>
+
+<select id="recruitmentpostview3" resultMap="recruitmentmap"  parameterType="int">
+select c.id as c_id, g.id as g_id, user_id, title, contents, created_time, updated_time, board_type, `like`,
+ view_count, g.name as g_name, recruit_period, start_date, end_date, total_member
+from content c
+inner join study_group g on c.study_group_id = g.id where c.board_type =1 and c.id=#{id}
+</select>
+
 <insert id="insertStudyGroup" parameterType="com.ons.study.dto.StudyDTO" useGeneratedKeys="true" keyProperty="id">
 <!-- insert into study_group(name ,recruit_period, start_date, end_date, total_member) values(#{study.name}, #{study.recruit_period}, #{study.start_date}, #{study.end_date}, #{study.total_member}) -->
 insert into study_group(name ,recruit_period, start_date, end_date, total_member) values(#{name}, #{recruit_period}, #{start_date}, #{end_date}, #{total_member})
 </insert>
 
 <insert id="insertContent" parameterType="com.ons.study.dto.RecruitmentDTO" >
-insert into content(user_id ,title, contents, board_type, study_group_id) values(1, #{title}, #{contents}, 1, #{study.id})
+insert into content(user_id ,title, contents, board_type, study_group_id) values(#{user_id}, #{title}, #{contents}, 1, #{study.id})
 </insert>
 
 <insert id="insertSkill" parameterType="com.ons.study.dto.RecruitmentDTO" >
@@ -92,8 +107,31 @@ insert into skill(study_group_id,name) values(#{study.id},#{skill.name})
 	delete from skill where study_group_id=#{study_group_id}
 </delete>
 
-<!-- <update id="updateBoard" parameterType="boarddto"> -->
-<!-- 	update board set title=#{title}, contents=#{contents}, writingtime=now() where id=#{id} -->
-<!-- </update> -->
+<update id="updateContent" parameterType="com.ons.study.dto.RecruitmentDTO" >
+	update content set title=#{title}, contents=#{contents},  updated_time=now() where id=#{id}
+</update>
+
+<update id="updateStudy" parameterType="com.ons.study.dto.RecruitmentDTO" >
+	update study_group set name=#{study.name}, total_member=#{study.total_member}, recruit_period=#{study.recruit_period}, start_date=#{study.start_date}, end_date=#{study.end_date}  where id=#{study_group_id}
+</update>
+
+<update id="updateSkill" parameterType="com.ons.study.dto.RecruitmentDTO" >
+	update skill set name=#{skill.name}  where study_group_id=#{study_group_id}
+</update>
+
+<update id="updateViewCount" parameterType="int">
+	update content set view_count = view_count+1 where id=#{id}
+</update>
+
+<select id="filterList" resultMap="recruitmentmap"  parameterType="String">
+	select g.id as g_id, s.name as s_name, g.name as g_name, recruit_period, start_date, end_date, total_member, s.study_group_id, c.id as c_id, s.id as s_id, user_id, title, contents, created_time, updated_time, board_type, `like`, u.nickname,
+		   view_count
+	from(
+		select * from skill where name = #{name}
+        ) s join study_group g on s.study_group_id = g.id 
+        join content c on s.study_group_id = c.study_group_id join user u on c.user_id = u.id
+</select>
+
+
 
 </mapper>
