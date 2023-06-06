@@ -27,7 +27,6 @@
 </resultMap>
 
 <select id="recruitmentList" resultMap="recruitmentmap">
-<<<<<<< HEAD
 select c.id as c_id, s.id as s_id, user_id, title, contents, created_time, updated_time, board_type, `like`,
  view_count, s.study_group_id, s.name as s_name
 =======
@@ -46,15 +45,7 @@ inner join skill s on c.study_group_id = s.study_group_id where board_type =1 or
 	<result property="total_member" column="total_member"/>
 </resultMap>
 <select id="recruitmentList2" resultMap="recruitmentmap">
-<<<<<<< HEAD
-select c.id as c_id, g.id as g_id, user_id, title, contents, created_time, updated_time, board_type, `like`,
- view_count, g.name as g_name, recruit_period, start_date, end_date, total_member
-=======
-select c.id as c_id, s.id as s_id, user_id, title, contents, created_time, updated_time, board_type,
- view_count, name, recruit_period, start_date, end_date, total_member
->>>>>>> branch 'develop' of https://github.com/kdtkdt/OnS.git
-from content c
-inner join study_group g on c.study_group_id = g.id where board_type =1 order by created_time desc
+
 </select>
 
 <resultMap type="com.ons.study.dto.UserDTO" id="userMap">
