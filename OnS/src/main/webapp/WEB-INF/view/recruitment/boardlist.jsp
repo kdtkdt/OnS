@@ -21,7 +21,7 @@
 		    <input type="text" class="select" vlaue="" placeholder="사용 언어를 검색하세요" name="name"/>
 		 	<button type="submit" class="button ml10 pt5 pb5 pl20 pr20 fon-13">검색</button>
 		 </form>
-		 	<button id="newPage" type="button" class="button ml10 pt5 pb5 pl20 pr20 fon-13  mr10" onclick="document.location.href='/boardrecruitmentlist'">새글작성</button>
+		 	<button id="newPage" type="button" class="button ml10 pt5 pb5 pl20 pr20 fon-13  mr10" onclick="document.location.href='/recruit/boardwrite'">새글작성</button>
 		</div>
 	  </div>
       <div class="container">
