@@ -651,3 +651,20 @@ input::placeholder {
     float: left;
     margin-left:5px !important;
 }
+
+/*2023.06.05 조수민 추가*/
+.recruitmentPostview ul{
+	display: grid; grid-template-columns: repeat(2, 3fr); grid-row-gap: 24px; row-gap: 24px; margin-top: 60px;
+}
+.recruitmentPostview ul li{
+	display: flex; position: relative; align-items: center; font-weight: 700; font-size: 20px
+}
+.recruitmentPostview ul li span{
+	font-size: 17px;
+}
+.recruitmentPostview ul li .inform{
+	color: #717171; margin-right: 36px;
+}
+.postviewDate{
+	border: 1px solid #aaa; border-radius: 0.5em; padding: 2px;
+}
