@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>OnS | 온라인 스터디</title>
 <script src="/js/jquery-3.6.4.min.js" ></script>
 <link href="/css/import.css" rel="stylesheet" type="text/css" />
 <script src="/js/qnapostview.js"></script>
