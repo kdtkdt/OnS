@@ -59,10 +59,8 @@ $(document).ready(function() {
 		board = 1;
 	} else if (location.href.includes('/qna')) {
 		board = 2;
-	} else if (location.href.includes('ProofShot.html')) {
-		board = 3;
 	} else if (location.href.includes('/review')) {
-		board = 4;
+		board = 3;
 	} else if (location.href.includes('/profile')) {
 		board = 9;
 	}
