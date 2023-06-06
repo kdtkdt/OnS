@@ -11,8 +11,6 @@ public interface RecruitmentService {
 	public List<RecruitmentDTO> recruitmentList2();
 	public List<RecruitmentDTO> recruitmentList3();
 	public List<RecruitmentDTO> filterList(String name);
-	public List<RecruitmentDTO> filterList2(String name);
-	public RecruitmentDTO filterList3(int id);
 	public RecruitmentDTO recruitmentpostview(int id);
 	public RecruitmentDTO recruitmentpostview2(int id);
 	public RecruitmentDTO recruitmentpostview3(int id);

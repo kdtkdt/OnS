@@ -53,10 +53,7 @@ public class RecruitmentController {
 			return mv;
 		}else {
 		List<RecruitmentDTO> dto = service.filterList(name); //study
-		List<RecruitmentDTO> dto2 = service.filterList2(name); //content
-		System.out.println(dto2.toString());
-		mv.addObject("filterlist",dto); //study
-		mv.addObject("filterlist2",dto2); //content
+		mv.addObject("filterlist",dto); 
 		mv.setViewName("recruitment/filterboardlist");	
 		return mv;
 		}

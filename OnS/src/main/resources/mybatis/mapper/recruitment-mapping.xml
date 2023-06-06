@@ -124,22 +124,14 @@ insert into skill(study_group_id,name) values(#{study.id},#{skill.name})
 </update>
 
 <select id="filterList" resultMap="recruitmentmap"  parameterType="String">
-select g.id as g_id, s.id as s_id, g.name as g_name, recruit_period, start_date, end_date, total_member, s.study_group_id, s.name as s_name
-from skill s
-inner join study_group g on g.id = s.study_group_id where s.name=#{name}
+	select g.id as g_id, s.name as s_name, g.name as g_name, recruit_period, start_date, end_date, total_member, s.study_group_id, c.id as c_id, s.id as s_id, user_id, title, contents, created_time, updated_time, board_type, `like`, u.nickname,
+		   view_count
+	from(
+		select * from skill where name = #{name}
+        ) s join study_group g on s.study_group_id = g.id 
+        join content c on s.study_group_id = c.study_group_id join user u on c.user_id = u.id
 </select>
 
-<select id="filterList2" resultMap="recruitmentmap" parameterType="String">
-select c.id as c_id, s.id as s_id, user_id, title, contents, created_time, updated_time, board_type, `like`,
- view_count, s.study_group_id, name
-from content c
-inner join skill s on c.study_group_id = s.study_group_id where board_type =1 and s.name=#{name} order by created_time desc 
-</select>
-
-<select id="filterList3" resultMap="recruitmentmap"  parameterType="int">
-select nickname
-from user where id=#{id}
-</select>
 
 
 </mapper>

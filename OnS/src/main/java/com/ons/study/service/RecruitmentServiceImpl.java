@@ -43,19 +43,6 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 	}
 
 	@Override
-	public List<RecruitmentDTO> filterList2(String name) {
-		return dao.filterList2(name);
-	}
-	
-	
-
-	@Override
-	public RecruitmentDTO filterList3(int id) {
-
-		return dao.filterList3(id);
-	}
-
-	@Override
 	public RecruitmentDTO recruitmentpostview(int id) {
 		// TODO Auto-generated method stub
 		return dao.recruitmentpostview(id);
