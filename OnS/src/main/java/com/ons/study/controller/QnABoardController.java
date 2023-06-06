@@ -1,6 +1,8 @@
 package com.ons.study.controller;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,12 +15,12 @@ import jakarta.servlet.http.HttpSession;
 
 import com.ons.study.dto.QnAContentDTO;
 import com.ons.study.dto.UserDTO;
-import com.ons.study.dto.CommentDTO;
 
 @Controller
 public class QnABoardController {
 	
 	private static final String HOME_ROUTE = "redirect:/qnaboard";
+	private static final int POPULAR_TAG_LIMIT_NUMBER = 10;
 	
 	@Autowired
 	QnAContentService qnaContentService;
@@ -27,10 +29,26 @@ public class QnABoardController {
 	@GetMapping("/qnaboard")
 	public String qnaBoard(Model model, 
 			@RequestParam(value="page", required=false, defaultValue="1") int page,
+			@RequestParam(value="tag", required=false) String popularTag,
+			@RequestParam(value="query", required=false) String query,
 			HttpSession session) {
 		addUserInfoToModel(model, session);
-		model.addAttribute("qnaLists", qnaContentService.getQnaContentByPage(page));
-		model.addAttribute("qnaContentsTotalCount", qnaContentService.getQnaContentTotalCount());
+		
+		List<QnAContentDTO> qnaContent = null;
+		long qnaContentCount = 0;
+		if (popularTag != null && query == null) {
+			qnaContent = qnaContentService.getQnaContentByTag(page, popularTag);
+			qnaContentCount = qnaContentService.getQnaContentCountByTag(popularTag);
+		} else if (popularTag == null && query != null) {
+			qnaContent = qnaContentService.getQnaContentByKeyword(page, query);
+			qnaContentCount = qnaContentService.getQnaContentCountByKeyword(query);
+		} else {
+			qnaContent = qnaContentService.getQnaContentByPage(page);
+			qnaContentCount = qnaContentService.getQnaContentTotalCount();
+		}
+		model.addAttribute("qnaLists", qnaContent);
+		model.addAttribute("qnaContentsTotalCount", qnaContentCount);
+		model.addAttribute("popularTags", qnaContentService.getPopularTags(POPULAR_TAG_LIMIT_NUMBER));
 		model.addAttribute("pageLimit", QnAContentService.PAGE_LIMIT);
 		return "QnABoard";
 	}
