@@ -1,6 +1,5 @@
 package com.ons.study.service;
 
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,29 +16,9 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 
 	
 	@Override
-	public List<RecruitmentDTO> recruitmentList() {
+	public List<RecruitmentDTO> recruitmentList(String name) {
 		// TODO Auto-generated method stub
-		return dao.recruitmentList();
-	}
-
-	@Override
-	public List<RecruitmentDTO> recruitmentList2() {
-		// TODO Auto-generated method stub
-		return dao.recruitmentList2();
-	}
-	
-	@Override
-	public List<RecruitmentDTO> recruitmentList3() {
-		// TODO Auto-generated method stub
-		return dao.recruitmentList3();
-	}
-	
-	
-
-	@Override
-	public List<RecruitmentDTO> filterList(String name) {
-		// TODO Auto-generated method stub
-		return dao.filterList(name);
+		return dao.recruitmentList(name);
 	}
 
 	@Override

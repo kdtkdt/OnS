@@ -33,31 +33,14 @@ public class RecruitmentController {
 	QnAContentService qnaContentService;
 	
 	@RequestMapping("/recruitmentlist")
-	public ModelAndView recruitmentList() {
-		List<RecruitmentDTO> dto = service.recruitmentList();
-		List<RecruitmentDTO> dto2 = service.recruitmentList2();
-		List<RecruitmentDTO> dto3 = service.recruitmentList3();
+	public ModelAndView recruitmentList(@RequestParam(value="name", required=false, defaultValue="") String name) {
+		List<RecruitmentDTO> dto = service.recruitmentList(name);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("boardlist",dto);
-		mv.addObject("boardlist2",dto2);
-		mv.addObject("boardlist3",dto3);
 		mv.setViewName("recruitment/boardlist");	
 		return mv;
 	}
 	
-	@RequestMapping("/recruit/filterList")
-	public ModelAndView filterList(String name) {
-		ModelAndView mv = new ModelAndView();
-		if(name.equals("")) {
-			mv.setViewName("redirect:/recruitmentlist");
-			return mv;
-		}else {
-		List<RecruitmentDTO> dto = service.filterList(name); //study
-		mv.addObject("filterlist",dto); 
-		mv.setViewName("recruitment/filterboardlist");	
-		return mv;
-		}
-	}
 	
 	@RequestMapping("/recruit/recruitmentpostview")
 	public ModelAndView recruitmentpostview(@RequestParam(value="id", required=false, defaultValue="1") int id, Model model, HttpSession session) {
