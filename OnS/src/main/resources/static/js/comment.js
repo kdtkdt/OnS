@@ -140,7 +140,6 @@ $(document).ready(function() {
 			if (commentHtml !== modifiedCommentHtml) {
 				
 				const commentId = $(this).parent().parent().find('.comment-id').val();
-				
 				const data = {
 					'id': commentId,
 					'contents': modifiedCommentHtml,
@@ -149,7 +148,7 @@ $(document).ready(function() {
 				};
 				
 			    commentRequest('/modify-comment', 'PUT', data);
-				$(this).parent().parent().find('.comment').html(modifiedCommentHtml);
+				$(this).parent().parent().find('.comment:nth(0)').html(modifiedCommentHtml);
 			}
 			removeModifyCommentInput($(this));
 		});
