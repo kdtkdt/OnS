@@ -16,21 +16,9 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 
 	
 	@Override
-	public List<RecruitmentDTO> recruitmentList() {
+	public List<RecruitmentDTO> recruitmentList(String name) {
 		// TODO Auto-generated method stub
-		return dao.recruitmentList();
-	}
-
-	@Override
-	public List<RecruitmentDTO> recruitmentList2() {
-		// TODO Auto-generated method stub
-		return dao.recruitmentList2();
-	}
-	
-	@Override
-	public List<RecruitmentDTO> recruitmentList3() {
-		// TODO Auto-generated method stub
-		return dao.recruitmentList3();
+		return dao.recruitmentList(name);
 	}
 
 	@Override
@@ -39,6 +27,18 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 		return dao.recruitmentpostview(id);
 	}
 
+
+	@Override
+	public RecruitmentDTO recruitmentpostview2(int id) {
+		// TODO Auto-generated method stub
+		return dao.recruitmentpostview2(id);
+	}
+
+	@Override
+	public RecruitmentDTO recruitmentpostview3(int id) {
+		// TODO Auto-generated method stub
+		return dao.recruitmentpostview3(id);
+	}
 
 	@Override
 	public int insertContent(RecruitmentDTO dto) {
@@ -59,6 +59,23 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 		// TODO Auto-generated method stub
 		dao.deleteStudyGroup(id);
 		return dao.deleteSkill(id);
+	}
+
+	@Override
+	public int updateContent(RecruitmentDTO dto) {
+		return dao.updateContent(dto);
+	}
+	
+	@Override
+	public int updateSkill(RecruitmentDTO dto) {
+		dao.updateStudy(dto);
+		return dao.updateSkill(dto);
+	}
+
+	@Override
+	public int updateViewCount(int id) {
+		// TODO Auto-generated method stub
+		return dao.updateViewCount(id);
 	}
 	
 

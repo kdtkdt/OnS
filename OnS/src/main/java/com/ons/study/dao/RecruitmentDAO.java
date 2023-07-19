@@ -15,10 +15,10 @@ import com.ons.study.dto.StudyDTO;
 @Mapper
 @Repository
 public interface RecruitmentDAO {
-	public List<RecruitmentDTO> recruitmentList();
-	public List<RecruitmentDTO> recruitmentList2();
-	public List<RecruitmentDTO> recruitmentList3();
+	public List<RecruitmentDTO> recruitmentList(String name);
 	public RecruitmentDTO recruitmentpostview(int id);
+	public RecruitmentDTO recruitmentpostview2(int id);
+	public RecruitmentDTO recruitmentpostview3(int id);
 	public int insertStudyGroup(StudyDTO studyDTO);
 	public int insertContent(RecruitmentDTO dto);
 	public int insertBoard(RecruitmentDTO dto);
@@ -26,6 +26,12 @@ public interface RecruitmentDAO {
 	public int deleteContent(int id);
 	public int deleteStudyGroup(int id);
 	public int deleteSkill(int id);
+	public int updateContent(RecruitmentDTO dto);
+	public int updateStudy(RecruitmentDTO dto);
+	public int updateSkill(RecruitmentDTO dto);
+	public int updateViewCount(int id);
+	
+	
 	
 	
 }

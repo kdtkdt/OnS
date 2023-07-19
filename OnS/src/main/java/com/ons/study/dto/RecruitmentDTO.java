@@ -5,10 +5,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class RecruitmentDTO {
 	int id, user_id ;
-	String title, contents, created_time, updated_time;
+	String title, contents;
+	String created_time, updated_time;
 	int board_type, like, view_count, study_group_id;
-	
-
 	StudyDTO study;
 	SkillDTO skill;
 	UserDTO user;

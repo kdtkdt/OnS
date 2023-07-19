@@ -39,6 +39,7 @@
 						placeholder="제목을 작성해주세요" name="title"></input>
 				</div>
 				<div id="textarea">
+					<input type="hidden" name="user_id" value="${user.getId()}">
 					<input type="text" id="title" class="fon-16 pb5 wid-100p mb20"
 						placeholder="스터디 그룹명을 작성해주세요" name="study.name"></input>
 					<input type="text" id="title" class="fon-16 pb5 wid-100p mb20"
@@ -47,17 +48,11 @@
 					 name="study.total_member" placeholder="모집인원을 작성해주세요"></input>
 					<div class="datebox mb20">
 						<label for="date" class="fon-16 mr10" >마감 기한 :</label> 
-						<input
-							type="date" data-placeholder="날짜 선택" class="mr15"
-							style="border: 1px solid #aaa; border-radius: 0.5em; padding: 2px;" name="study.recruit_period">
+						<input type="date" data-placeholder="날짜 선택" class="mr15 postviewDate"  name="study.recruit_period">
 						<label for="date" class="fon-16 mr10" >시작일 :</label> 
-						<input
-							type="date" data-placeholder="날짜 선택" class="mr15"
-							style="border: 1px solid #aaa; border-radius: 0.5em; padding: 2px;" name="study.start_date">
+						<input type="date" data-placeholder="날짜 선택" class="mr15 postviewDate" name="study.start_date">
 						<label for="date" class="fon-16 mr10" >종료일 :</label> 
-						<input
-							type="date" data-placeholder="날짜 선택" class="mr15" 
-							style="border: 1px solid #aaa; border-radius: 0.5em; padding: 2px;" name="study.end_date">
+						<input type="date" data-placeholder="날짜 선택" class="mr15 postviewDate" name="study.end_date">
 					</div>
 
 					<!-- 			에디터 사용시 추가 textarea대신 쓰세요! -->
@@ -68,8 +63,8 @@
 					<div class="btn-box mt20">
 						<button type="submit" id="save"
 							class="button ml10 pt5 pb5 pl20 pr20 fon-13">저장</button>
-						<button id="cancel" class="button ml10 pt5 pb5 pl20 pr20 fon-13"
-							onclick="document.location.href='/recruit/recruitmentwriteresult'">취소</button>
+						<button type="button" id="cancel" class="button ml10 pt5 pb5 pl20 pr20 fon-13"
+							onclick="document.location.href='/recruitmentlist'">취소</button>
 					</div>
 				</div>
 			</div>
@@ -91,9 +86,9 @@
 // 		location.href = './boardRecruitment.html?board=1';
 // 	});
 	
-// 	$('#cancel').click(function(){
-// 		location.href = './boardRecruitment.html?board=1';
-// 	});
+	$('#cancel').click(function(){
+		location.href = '/recruitmentlist';
+	});
 	/*에디터 사용시 추가*/
 	<!-- Initialize Quill editor -->
 	  var quill = new Quill('#editor', {
