@@ -18,7 +18,8 @@
 
 ## 1. 질문 게시판
 
-통일된 레이아웃 안에 `질문 게시판`만의 특징을 갖는 데이터를 포함하여 게시판을 구성하였습니다.
+- 통일된 레이아웃 안에 `질문 게시판`만의 특징을 갖는 데이터를 포함하여 게시판을 구성하였습니다.
+- 키워드를 이용하여 검색할 수 있습니다.
 
 ![질문 게시판 화면](https://github.com/kdtkdt/OnS/assets/135004614/a3c089e5-1663-4adc-b3f6-67355751876e)
 
@@ -38,7 +39,7 @@
 
 ## 2. 게시판 공용 댓글/대댓글 기능
 
-로그인하지 않은 상태에서는 스팸글 등을 방지하기 위해 작성하지 못하도록 하였습니다.
+- 로그인하지 않은 상태에서는 스팸글 등을 방지하기 위해 작성하지 못하도록 하였습니다.
 
 ### 비로그인 상태
 
@@ -102,3 +103,25 @@
 - [TagDTO.java](https://github.com/kdtkdt/OnS/blob/%EC%A0%95%EC%84%B1%EA%B5%AD/OnS/src/main/java/com/ons/study/dto/TagDTO.java)
 - [QnAContentDTO.java](https://github.com/kdtkdt/OnS/blob/%EC%A0%95%EC%84%B1%EA%B5%AD/OnS/src/main/java/com/ons/study/dto/QnAContentDTO.java#L20)
 
+### 주간 인기 태그 기능
+
+- 일주일 동안 작성된 질문글에 포함된 태그를 누적 갯수가 가장 많은 순으로 출력 합니다.
+- 태그를 선택하여 검색할 수 있습니다.
+
+![주간 인기 태그 중 JPA 선택 결과](https://github.com/kdtkdt/OnS/assets/135004614/27d98cfc-4754-4b6e-b005-f2fdacba0c9b)
+
+### 주간 인기 태그 기능 관련 파일
+- [QnABoard.jsp](https://github.com/kdtkdt/OnS/blob/%EC%A0%95%EC%84%B1%EA%B5%AD/OnS/src/main/webapp/WEB-INF/view/QnABoard.jsp#L107-L116)
+- [qnaboard.js](https://github.com/kdtkdt/OnS/blob/%EC%A0%95%EC%84%B1%EA%B5%AD/OnS/src/main/resources/static/js/qnaboard.js#L36-L56)
+- [content.css](https://github.com/kdtkdt/OnS/blob/%EC%A0%95%EC%84%B1%EA%B5%AD/OnS/src/main/resources/static/css/content.css#L161-L173) 주간 인기 태그를 담고있는 컨테이너용 css 표시, 이외 태그 관련 css 는 태그 추가 기능 관련 파일에 추가한 것과 동일
+- [QnABoardController.java](https://github.com/kdtkdt/OnS/blob/%EC%A0%95%EC%84%B1%EA%B5%AD/OnS/src/main/java/com/ons/study/controller/QnABoardController.java#L39-L48)
+- [QnAContentService.java](https://github.com/kdtkdt/OnS/blob/%EC%A0%95%EC%84%B1%EA%B5%AD/OnS/src/main/java/com/ons/study/service/QnAContentService.java#L33-L39) 태그 검색 기능
+- [QnAContentService.java](https://github.com/kdtkdt/OnS/blob/%EC%A0%95%EC%84%B1%EA%B5%AD/OnS/src/main/java/com/ons/study/service/QnAContentService.java#L106-L109) 인기 태그 불러오기 기능
+- [QnAContentDAO.java](https://github.com/kdtkdt/OnS/blob/%EC%A0%95%EC%84%B1%EA%B5%AD/OnS/src/main/java/com/ons/study/dao/QnAContentDAO.java)
+- [TagDAO.java](https://github.com/kdtkdt/OnS/blob/%EC%A0%95%EC%84%B1%EA%B5%AD/OnS/src/main/java/com/ons/study/dao/TagDAO.java#L16)
+- [TagDTO.java](https://github.com/kdtkdt/OnS/blob/%EC%A0%95%EC%84%B1%EA%B5%AD/OnS/src/main/java/com/ons/study/dto/TagDTO.java)
+- [tag-mapping.xml](https://github.com/kdtkdt/OnS/blob/%EC%A0%95%EC%84%B1%EA%B5%AD/OnS/src/main/resources/mybatis/mapper/tag-mapping.xml#L26-L34)
+
+## 5. 데이터 모델 설계 및 ERD 작성
+
+![ERDCLOUD](https://github.com/kdtkdt/OnS/assets/135004614/d4e6dafd-be1d-4983-8b93-826f4481f6c2)
