@@ -72,6 +72,7 @@
 ![질문 미해결 상태 화면](https://github.com/kdtkdt/OnS/assets/135004614/76cb6683-1b48-4110-842f-18fafab403de)
 
 ### 관련 파일
+
 - [QnAPostView.jsp](https://github.com/kdtkdt/OnS/blob/%EC%A0%95%EC%84%B1%EA%B5%AD/OnS/src/main/webapp/WEB-INF/view/QnAPostView.jsp#L53-L60)
 - [qnapostview.js](https://github.com/kdtkdt/OnS/blob/%EC%A0%95%EC%84%B1%EA%B5%AD/OnS/src/main/resources/static/js/qnapostview.js#L90-L100)
 - [content.css](https://github.com/kdtkdt/OnS/blob/%EC%A0%95%EC%84%B1%EA%B5%AD/OnS/src/main/resources/static/css/content.css#L309-L373)
@@ -80,4 +81,24 @@
 - [QnAContentDAO.java](https://github.com/kdtkdt/OnS/blob/%EC%A0%95%EC%84%B1%EA%B5%AD/OnS/src/main/java/com/ons/study/dao/QnAContentDAO.java#L28)
 - [QnAContentDTO.java](https://github.com/kdtkdt/OnS/blob/%EC%A0%95%EC%84%B1%EA%B5%AD/OnS/src/main/java/com/ons/study/dto/QnAContentDTO.java#L18)
 - [qnacontent-mapping.xml](https://github.com/kdtkdt/OnS/blob/%EC%A0%95%EC%84%B1%EA%B5%AD/OnS/src/main/resources/mybatis/mapper/qnacontent-mapping.xml#L104-L106)
+
+## 4. 질문글 태그 추가 기능 및 주간 인기 태그 기능
+
+### 태그 추가 기능
+
+- 질문 글 추가/수정 시 태그 추가/삭제가 가능합니다.
+- 최대 5개까지 태그를 추가할 수 있습니다.
+- 중복 태그는 추가할 수 없습니다.
+
+![질문글 수정화면 내 태그 기능 화면](https://github.com/kdtkdt/OnS/assets/135004614/15e634c8-04a1-4286-9d3a-4e2b98e8e717)
+
+### 태그 추가 기능 관련 파일
+- [QnABoardWrite.jsp](https://github.com/kdtkdt/OnS/blob/%EC%A0%95%EC%84%B1%EA%B5%AD/OnS/src/main/webapp/WEB-INF/view/QnABoardWrite.jsp#L46-L51)
+- [qnaboardwrite.js](https://github.com/kdtkdt/OnS/blob/%EC%A0%95%EC%84%B1%EA%B5%AD/OnS/src/main/resources/static/js/qnaboardwrite.js#L38-L105)
+- [content.css](https://github.com/kdtkdt/OnS/blob/%EC%A0%95%EC%84%B1%EA%B5%AD/OnS/src/main/resources/static/css/content.css#L202-L214)
+- [QnABoardController.java](https://github.com/kdtkdt/OnS/blob/%EC%A0%95%EC%84%B1%EA%B5%AD/OnS/src/main/java/com/ons/study/controller/QnABoardController.java#L84)
+- [QnAContentService.java](https://github.com/kdtkdt/OnS/blob/%EC%A0%95%EC%84%B1%EA%B5%AD/OnS/src/main/java/com/ons/study/service/QnAContentService.java#L95-L104)
+- [TagDAO.java](https://github.com/kdtkdt/OnS/blob/%EC%A0%95%EC%84%B1%EA%B5%AD/OnS/src/main/java/com/ons/study/dao/TagDAO.java)
+- [TagDTO.java](https://github.com/kdtkdt/OnS/blob/%EC%A0%95%EC%84%B1%EA%B5%AD/OnS/src/main/java/com/ons/study/dto/TagDTO.java)
+- [QnAContentDTO.java](https://github.com/kdtkdt/OnS/blob/%EC%A0%95%EC%84%B1%EA%B5%AD/OnS/src/main/java/com/ons/study/dto/QnAContentDTO.java#L20)
 
