@@ -90,7 +90,7 @@
 - 최대 5개까지 태그를 추가할 수 있습니다.
 - 중복 태그는 추가할 수 없습니다.
 
-![질문글 수정화면 내 태그 기능 화면](https://github.com/kdtkdt/OnS/assets/135004614/15e634c8-04a1-4286-9d3a-4e2b98e8e717)
+![질문글 수정화면 내 태그 기능 화면](https://github.com/kdtkdt/OnS/assets/135004614/57af2a60-5953-4c11-ba0d-a7b4a43c81ed)
 
 ### 태그 추가 기능 관련 파일
 - [QnABoardWrite.jsp](https://github.com/kdtkdt/OnS/blob/%EC%A0%95%EC%84%B1%EA%B5%AD/OnS/src/main/webapp/WEB-INF/view/QnABoardWrite.jsp#L46-L51)
