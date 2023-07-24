@@ -125,3 +125,45 @@
 ## 5. 데이터 모델 설계 및 ERD 작성
 
 ![ERDCLOUD](https://github.com/kdtkdt/OnS/assets/135004614/d4e6dafd-be1d-4983-8b93-826f4481f6c2)
+
+# 문제점
+
+## 1. REST API 에 모두 동사 사용, 수정에 모두 PUT 메서드 사용
+
+- JSON을 주고받기만 하면 REST API라 잘못 알고있었습니다.
+- REST API 권장 사항으로 동작은 HTTP 메서드로 나타내고, resource를 명사로 사용할 것을 권장하고 있지만, 당시 지식이 없어 모두 동사로 하였습니다.
+- 수정은 PUT 메서드만 알고 PATCH 메서드는 존재 조차 모르고 있었습니다.
+
+[QnARestController.java](https://github.com/kdtkdt/OnS/blob/%EC%A0%95%EC%84%B1%EA%B5%AD/OnS/src/main/java/com/ons/study/controller/QnARestController.java)
+
+```java
+@PostMapping("/api/qna/write")
+@PutMapping("/api/qna/modify")
+@DeleteMapping("/api/qna/delete")
+@PutMapping("/api/qna/read")
+@PutMapping("/api/qna/solve")
+```
+
+- 위에서 대표적인 문제로 @PutMapping("/api/qna/read") 를 봤을 때, 뭘 하겠다는 건지 전혀 파악이 안되는 것을 알 수 있습니다. 실제로는 조회수를 업데이트합니다.
+- @PutMapping("/api/qna/solve") 은 질문 해결여부를 수정합니다. PUT과 DELETE로 나누거나, PATCH 메서드로 게시글의 부분 정보로서 수정을 하는게 더 옳았다고 생각됩니다.
+
+## 2. Controller, Service, DAO 에서 모두 하나의 DTO 사용
+
+- Controller 나 Service에서 사용하기 위해 별도의 DTO 파일을 생성하는게 불필요하게 복잡하다고 생각했었습니다.
+- 이로 인해 아래와 같이 단 하나의 값을 변경하는데, 불필요한 null properties 와 함께 값을 반환했습니다.
+
+[QnARestController.java](https://github.com/kdtkdt/OnS/blob/%EC%A0%95%EC%84%B1%EA%B5%AD/OnS/src/main/java/com/ons/study/controller/QnARestController.java#L100-L107)
+
+```java
+// 질문 해결 여부 변경
+	@PutMapping("/api/qna/solve")
+	public ResponseEntity<QnAContentDTO> updateSolve (@RequestBody QnAContentDTO qnaContent, HttpSession session) {
+		qnaContentService.updateQnaContentSolved(qnaContent.getId());
+		boolean isSolved = !qnaContent.isSolved();
+		qnaContent = new QnAContentDTO();
+		qnaContent.setSolved(isSolved);
+		return ResponseEntity.ok(qnaContent);
+	}
+```
+
+업데이트 중입니다...
