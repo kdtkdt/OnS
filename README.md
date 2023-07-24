@@ -9,7 +9,7 @@
 
 - 구현 사항
   1. 질문 게시판
-  2. 게시판 공용 댓글/대댓글 기능
+  2. 게시판 공용 댓글/대댓글(댓글의 댓글) 기능
   3. 질문글 해결/미해결 상태 변경 및 표시 기능
   4. 질문글 태그 추가 기능 및 주간 인기 태그 기능
   5. 데이터 모델 설계 및 ERD 작성
@@ -59,6 +59,41 @@
 - [CommentDAO.java](https://github.com/kdtkdt/OnS/blob/%EC%A0%95%EC%84%B1%EA%B5%AD/OnS/src/main/java/com/ons/study/dao/CommentDAO.java)
 - [CommentDTO.java](https://github.com/kdtkdt/OnS/blob/%EC%A0%95%EC%84%B1%EA%B5%AD/OnS/src/main/java/com/ons/study/dto/CommentDTO.java)
 - [comment-mapping.xml](https://github.com/kdtkdt/OnS/blob/%EC%A0%95%EC%84%B1%EA%B5%AD/OnS/src/main/resources/mybatis/mapper/comment-mapping.xml)
+
+### 어려웠던 점
+
+대체로 되게 만드는데만 집중했던 프로젝트이다 보니, 기술적으로 어려웠다고 꼽을만한 문제는 없지만 댓글 기능은 시간이 가장 오래 걸린 작업이었습니다. 특히나 대댓글 입력창은 입력 버튼을 눌렀을 때 해당 댓글 밑에 표시되는게 맞다고 생각되기도하고, 참고했던 사이트들도 마찬가지였습니다. 그런데 FrontEnd 지식이 부족해서 생각보다 시간이 오래 걸렸습니다.
+
+![OnS 대댓글 입력창 표시 화면](https://github.com/kdtkdt/OnS/assets/135004614/89005332-2ca1-441c-bca4-62bbb719abee)
+
+JSP 의 forEach 태그를 이용해서 기존의 댓글을 불러왔습니다.
+
+```html
+<c:forEach items="${comment.childComments}" var="childComment">
+```
+
+그리고 javascript로 입력창 html 요소를 붙여넣었습니다. 지금에서는 이걸 왜 혼란스러워 했는지 이해가 안되지만, 처음에 parent, sibling 을 계산하는데 혼란이 와서 여기서도 시간이 다른데보다 많이 소모되었습니다.
+
+결과물을 보여야되는데 지식은 부족하니 어쩔수 없이 구현하기는 했지만 html 구조가 조금만 바뀌어도 다시 변경해야되기 때문에, 굉장히 안좋은 선택이었다고 생각됩니다.
+
+```javascript
+const commentHtml = $(this).parent().siblings('p').html();
+		
+if($(this).parent().parent().parent().find('.comment-modify-input').val() == undefined) {
+    $(this).parent().parent().siblings('#content-delimeter').first().after(`
+        <textarea class="comment-modify-input pppp20" style="width:100%">${commentHtml.replace(/<br\s*\/?>/gi, '\n')}</textarea>
+        <div id="button-box">
+            <button class="comment-modify-cancel-button mt20 mb10 ml10 pt5 pb5 pl20 pr20 fon-13">취소</button>
+            <button class="comment-save-modify-button mt20 mb10 ml10 pt5 pb5 pl20 pr20 fon-13">수정완료</button>
+        </div>
+    `);
+    $('html, body').animate({
+        scrollTop: $('.comment-modify-input').offset().top,
+    }, 800);
+}
+```
+
+다시 한다면, 질문 게시판의 답변은 중요한 컨텐츠가 될 수 있기 때문에 별도의 화면에서 에디터를 이용하여 작성할 수 있게하는 방식으로 구현을 할 것 같습니다.
 
 ## 3. 질문글 해결/미해결 상태 변경 및 표시 기능
 
